@@ -1,0 +1,61 @@
+{% extends 'content/layout/base.html' %}
+{% load static %}
+{% load i18n %}
+{% block title %}Акции {% endblock %}
+
+{% block content %}
+
+    <div class="row">
+            <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active" data-bs-interval="{{ banner.turning_speed }}000">
+      <img src="{{ banner.banner_set.first.image.url }}" class="d-block w-100" height="500px" alt="...">
+    </div>
+      {% for photo in banner.banner_set.all|slice:"1:" %}
+    <div class="carousel-item" data-bs-interval="{{ banner.turning_speed }}000">
+      <img src="{{ photo.image.url }}" class="d-block w-100" height="500px" alt="...">
+    </div>
+      {% endfor %}
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+        </div>
+
+
+<h2 style="text-align: center">{% trans "Акции и скидки" %}</h2>
+    <div class="col-sm-12">
+<div class="row" style="justify-content: center">
+    <div class="col-sm-10 col-md-7 col-lg-6">
+        <div class="row" style="padding-top: 50px; background-color: #2a2f3e">
+            {% for sale in sales %}
+                {% if sale.is_active %}
+            <div class="col-4" style="padding-left: 10px" >
+                <a href="{% url 'content:new' sale.id %}" style="text-decoration: underline">
+                <img src="{{ sale.logo.url }}" alt="" width="80%" style="border-radius: 10px;" >
+                <p style="text-align: left;">{{ sale.title }}</p>
+                    </a>
+                    <p style="color: white">{{ sale.date }}</p>
+                    <p style="color: wheat">{{ sale.describe }}</p>
+            </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    <div class="col-sm-2">
+        <div class="row" style="justify-content: center">
+            <div class="col-sm-8" style="padding-top: 20px"><img src="{% static 'content/dist/img/adversting.png' %}" alt="" width="100%"></div>
+            <div class="col-sm-8" style="padding-top: 20px"><img src="{% static 'content/dist/img/vkgroup2.png' %}" alt="" width="100%"></div>
+            <div class="col-sm-8" style="padding-top: 20px"><img src="{% static 'content/dist/img/vkgroup.png' %}" alt="" width="100%"></div>
+
+        </div>
+    </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,93 @@
+{% extends 'cinema/layout/base.html' %}
+{% load static %}
+{% block title %}Редактирование новости{% endblock %}
+{% block content %}
+
+    <form id="form-container" enctype="multipart/form-data" method="post" style="padding-top: 70px; margin: 0 70px 0 70px; max-height: content-box">
+            {% csrf_token %}
+    {%  for hidden_field in news_or_sales.hidden_fields %}
+        {{ hidden_field.errors }}
+            {{ hidden_field }}
+        {% endfor %}
+        <div class="row" style="text-align: right; align-items: center; margin-bottom: 25px">
+        <div class="col-sm-10">
+            <label class="checkbox-ios">
+                {{ page.status }}
+                <span class="checkbox-ios-switch">
+                </span>
+            </label>
+        </div>
+        <div class="col-sm-2">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="ru-tab" data-bs-toggle="tab" data-bs-target="#ru" type="button" role="tab" aria-controls="ru" aria-selected="true">Русский</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="uk-tab" data-bs-toggle="tab" data-bs-target="#uk" type="button" role="tab" aria-controls="uk" aria-selected="false">Украинский</button>
+          </li>
+        </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            {{ page.phone1.label_tag }}
+        </div>
+        <div class="col-sm-2">
+            <p>{{ page.phone1 }}</p>
+            <p style="margin-top: 10px">{{ page.phone2 }}</p>
+        </div>
+    </div>
+
+    <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="ru" role="tabpanel" aria-labelledby="ru-tab">
+                    <div class="row" style="margin-bottom: 40px; padding-top: 20px">
+
+                        <div class="col-2">
+                            {{ page.seo_text_ru.label_tag }}
+                        </div>
+                        <div class="col-sm-6">
+                            {{ page.seo_text_ru }}
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="uk" role="tabpanel" aria-labelledby="uk-tab">
+                    <div class="row" style="margin-bottom: 40px; padding-top: 20px">
+                        <div class="col-2">
+                            {{ page.seo_text_uk.label_tag }}
+                        </div>
+                        <div class="col-sm-6">
+                            {{ page.seo_text_uk }}
+                        </div>
+                    </div>
+            </div>
+    </div>
+    <!-- end name, describe, convenience-->
+
+
+    <div class="row" style="display: flex; padding-bottom: 25px">
+        <div class="col-2" style="align-items: center">{{ news_or_sales.link.label_tag }}</div>
+        <div class="col-6">{{ news_or_sales.link }}</div>
+    </div>
+<!-- SEO TEXT -->
+    <label><b>SEO block</b></label>
+{% for s in seo %}
+            {{ s.errors }}
+            <div class="row" style="max-width: 100%; margin-bottom: 30px" >
+                <div class="col-sm-2" style="text-align: right;">{{ s.label_tag }}</div>
+                <div class="col-6" style="margin-left: 3px">{{ s }}</div>
+            </div>
+        {% endfor %}
+        <div class="row" style="display:flex; justify-content: center; width: 100%; padding-top: 0; padding-bottom: 50px;">
+            <div class="col-3" style="justify-content: center; flex-wrap:nowrap"><input type="submit" id="submit-btn" value="Сохранить изменения" class="btn btn-primary"></div>
+            <div class="col-2" style="justify-content: center"><a href="{% url 'cinema:pages' %}" role="button" class="btn btn-secondary" style="justify-content: center" >Отмена</a></div>
+            </div>
+    </form>
+<!-- END SEO TEXT -->
+
+
+
+<script src="{% static 'cinema/plugins/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'cinema/script_creating/image_preview.js' %}"></script>
+        <script src="{% static 'cinema/script_creating/formset_gallery.js' %}"></script>
+
+{% endblock %}

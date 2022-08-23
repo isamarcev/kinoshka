@@ -1,0 +1,220 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-08-03 16:15+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != "
+"11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % "
+"100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || "
+"(n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
+
+#: content/templates/content/cinema/cinema_list.html:6
+#: content/templates/content/cinema/cinema_list.html:9
+#: content/templates/content/cinema/cinema_view.html:6
+msgid "Список кинотеатров"
+msgstr "Spisok Kinoteatrov"
+
+#: content/templates/content/cinema/cinema_view.html:19
+msgid "Всего залов"
+msgstr "Vsego zalov"
+
+#: content/templates/content/cinema/cinema_view.html:31
+#: content/templates/content/hall/hall_view.html:19
+msgid "Смотрите сегодня"
+msgstr "LOOK TODAY"
+
+#: content/templates/content/cinema/cinema_view.html:40
+#: content/templates/content/hall/hall_view.html:26
+msgid "Расписание всех сеансов"
+msgstr "ROZKLAD all seddion"
+
+#: content/templates/content/cinema/cinema_view.html:54
+msgid "Расписание сеансов"
+msgstr "Rozklad session"
+
+#: content/templates/content/cinema/cinema_view.html:62
+msgid "Условия"
+msgstr "Usloviya"
+
+#: content/templates/content/cinema/cinema_view.html:78
+#: content/templates/content/hall/hall_view.html:55
+#: content/templates/content/pages/adv.html:31
+#: content/templates/content/pages/vip-hall.html:31
+msgid "Фотогалерея"
+msgstr "Photo gallery"
+
+#: content/templates/content/hall/hall_view.html:39
+msgid "Карта зала"
+msgstr "Map zala"
+
+#: content/templates/content/layout/base.html:58
+#: content/templates/content/pages/main_page.html:58
+msgid "Профиль"
+msgstr "Profile"
+
+#: content/templates/content/layout/base.html:61
+#: content/templates/content/pages/main_page.html:61
+msgid "Выйти"
+msgstr "Viyti"
+
+#: content/templates/content/layout/base.html:117
+#: content/templates/content/layout/base.html:202
+#: content/templates/content/pages/main_page.html:116
+#: content/templates/content/pages/main_page.html:324
+msgid "Афиша"
+msgstr "Afisha"
+
+#: content/templates/content/layout/base.html:120
+#: content/templates/content/layout/base.html:203
+#: content/templates/content/pages/main_page.html:119
+#: content/templates/content/pages/main_page.html:325
+msgid "Расписание"
+msgstr "Rozklad"
+
+#: content/templates/content/layout/base.html:123
+#: content/templates/content/pages/main_page.html:122
+msgid "Скоро"
+msgstr "Soon"
+
+#: content/templates/content/layout/base.html:126
+#: content/templates/content/layout/base.html:205
+#: content/templates/content/pages/main_page.html:125
+#: content/templates/content/pages/main_page.html:327
+msgid "Кинотеатры"
+msgstr "Kinoteatri"
+
+#: content/templates/content/layout/base.html:129
+#: content/templates/content/layout/base.html:206
+#: content/templates/content/pages/main_page.html:128
+#: content/templates/content/pages/main_page.html:328
+msgid "Акции"
+msgstr "Accii"
+
+#: content/templates/content/layout/base.html:136
+#: content/templates/content/layout/base.html:212
+#: content/templates/content/news/new_view.html:32
+#: content/templates/content/pages/main_page.html:135
+#: content/templates/content/pages/main_page.html:334
+msgid "Новости"
+msgstr "Novosti"
+
+#: content/templates/content/layout/base.html:137
+#: content/templates/content/layout/base.html:213
+#: content/templates/content/pages/main_page.html:136
+#: content/templates/content/pages/main_page.html:335
+msgid "Реклама"
+msgstr "Reklama"
+
+#: content/templates/content/layout/base.html:138
+#: content/templates/content/pages/main_page.html:137
+msgid "Кафе"
+msgstr "Kava"
+
+#: content/templates/content/layout/base.html:139
+#: content/templates/content/pages/adv.html:13
+#: content/templates/content/pages/main_page.html:138
+#: content/templates/content/pages/vip-hall.html:13
+msgid "Vip-зал"
+msgstr "Vip-Zal"
+
+#: content/templates/content/layout/base.html:140
+#: content/templates/content/pages/main_page.html:139
+#: content/templates/content/pages/mobile.html:13
+msgid "Мобильное приложение"
+msgstr "Mobile dodatok"
+
+#: content/templates/content/layout/base.html:141
+#: content/templates/content/layout/base.html:215
+#: content/templates/content/pages/contacts.html:30
+#: content/templates/content/pages/main_page.html:140
+#: content/templates/content/pages/main_page.html:337
+msgid "Контакты"
+msgstr "Contacts"
+
+#: content/templates/content/layout/base.html:192
+#: content/templates/content/pages/main_page.html:314
+msgid "Мобильные приложения"
+msgstr "Mobile dodatok"
+
+#: content/templates/content/layout/base.html:204
+#: content/templates/content/pages/main_page.html:326
+msgid "Скоро в проекате"
+msgstr "Skoro v prokate"
+
+#: content/templates/content/layout/base.html:211
+#: content/templates/content/pages/main_page.html:333
+msgid "О Кинотеатре"
+msgstr "About cinema"
+
+#: content/templates/content/layout/base.html:214
+#: content/templates/content/pages/main_page.html:336
+msgid "Кафе бар"
+msgstr "Kava"
+
+#: content/templates/content/news/news_list.html:32
+#: content/templates/content/sale/sale_list.html:32
+#: content/templates/content/sale/sale_view.html:32
+msgid "Акции и скидки"
+msgstr "Akcii and sales"
+
+#: content/templates/content/pages/coffee_bar.html:13
+msgid "Кафе-Бар"
+msgstr "kava-bar"
+
+#: venv/lib/python3.10/site-packages/django/views/templates/default_urlconf.html:7
+#: venv/lib/python3.10/site-packages/django/views/templates/default_urlconf.html:221
+msgid "The install worked successfully! Congratulations!"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/django/views/templates/default_urlconf.html:207
+#, python-format
+msgid ""
+"View <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" "
+"target=\"_blank\" rel=\"noopener\">release notes</a> for Django %(version)s"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/django/views/templates/default_urlconf.html:222
+#, python-format
+msgid ""
+"You are seeing this page because <a href=\"https://docs.djangoproject.com/en/"
+"%(version)s/ref/settings/#debug\" target=\"_blank\" "
+"rel=\"noopener\">DEBUG=True</a> is in your settings file and you have not "
+"configured any URLs."
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/django/views/templates/default_urlconf.html:230
+msgid "Django Documentation"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/django/views/templates/default_urlconf.html:231
+msgid "Topics, references, &amp; how-to’s"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/django/views/templates/default_urlconf.html:239
+msgid "Tutorial: A Polling App"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/django/views/templates/default_urlconf.html:240
+msgid "Get started with Django"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/django/views/templates/default_urlconf.html:248
+msgid "Django Community"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/django/views/templates/default_urlconf.html:249
+msgid "Connect, get help, or contribute"
+msgstr ""

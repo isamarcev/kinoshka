@@ -1,0 +1,247 @@
+{% extends 'cinema/layout/base.html' %}
+{% load static %}
+{% block title %}Баннеры {% endblock %}
+{% block content %}
+
+    <!-- MAIN BANNER -->
+    <form id="form_main" enctype="multipart/form-data" action="{% url 'cinema:update_main_banner' %}" method="post" style="padding-top: 30px; margin: 0 70px 0 70px;">
+        {% csrf_token %}
+    <div class="row" style="text-align: center">
+        <h3>
+            {{ main_banner.instance.title }}
+        </h3>
+    </div>
+    <div class="row" style="border-radius: 20px; border: 2px solid black;">
+        <div style="text-align: right; margin-top: 20px; height: auto; ">
+            <label class="checkbox-ios">
+                {{ main_banner.turning_on }}
+                <span class="checkbox-ios-switch">
+                </span>
+            </label>
+        </div>
+        <label>Размер 1000х190</label>
+    <div>
+            <button type="button" class="add-more-img btn btn-block btn-success" id="add_more" style="width: 100px; min-width: 100px; display: block">Добавить</button>
+        </div>
+        <!--FORMSET MAIN MANNER -->
+        <div id="form_set">
+                   {{ main_banner_formset.management_form }}
+                               {% for form in main_banner_formset %}
+                <div id="{{ form.prefix }}-form" style="display: inline-block">
+                        {% for hidden in form.hidden_fields %}
+                            {{ hidden }}
+                        {% endfor %}
+                        <div style="text-align: right; padding-right: 15px">
+                            <option value="" style="color: red; text-align: center; display: none" id="{{ form.prefix }}-validation"><b>Размеры не корректны!</b></option>
+                            <a class="btn-delete-form" onclick="delete_image(this.id)" id="{{ form.prefix }}">
+                                <img class="delete-gallery-form" src={% static 'cinema/dist/img/deleteimg.png' %}>
+                            </a>
+                        </div>
+{#                        <input type="hidden" name="{{ form.prefix }}-id" id="{{ form.prefix }}-id">#}
+                        <div style="text-align: center">
+                            <img src="{{ form.instance.image.url }}" id="{{ form.prefix }}-image" height="110" width="200"><br>
+                        </div>
+                        <div style="text-align: center">
+                            <a id="{{ form.prefix }}" onchange="preview_gallery(this.id)" class="btn btn-outline-success btn-file" style="margin: 15px 50px 15px 50px; min-width: 150px">Загрузить
+                                <input type="file" name="{{ form.prefix }}-image" accept="image/*" id="id_{{ form.prefix }}-image" value="{{ form.image.value }}">
+                            </a>
+                        </div>
+                        <div style="display: flex; justify-content: right">
+                            <label>URL:</label>
+                            <input type="text" name="{{ form.prefix }}-url" value="{{ form.url.value }}" id="id_{{ form.prefix }}-url" placeholder="URL">
+                        </div>
+                        <div style="display: flex; justify-content: right; padding-top: 5px">
+                            <label >Текст:</label>
+                            <input type="text" name="{{ form.prefix }}-text" value="{{ form.text.value }}" id="id_{{ form.prefix }}-text" placeholder="Текст">
+                        </div>
+                    </div>
+{% endfor %}
+                   </div>
+                       <div class="delete-list" style="display: none"></div>
+
+                <div id="empty_form" style="display: none">
+                    <div id="main_formset-__prefix__-form" style="display: inline-block">
+                        <div style="text-align: right; padding-right: 15px">
+                            <option value="" style="color: red; text-align: center; display: none" id="main_formset-__prefix__-validation"><b>Размеры не корректны!</b></option>
+                            <a class="btn-delete-form" onclick="delete_image(this.id)" id="main_formset-__prefix__">
+                                <img class="delete-gallery-form" src={% static 'cinema/dist/img/deleteimg.png' %}>
+                            </a>
+                        </div>
+                        <input type="hidden" name="main_formset-__prefix__-id" id="main_formset-__prefix__-id">
+                        <div style="text-align: center">
+                            <img src="{% static 'cinema/dist/img/preview_upload.png' %}" id="main_formset-__prefix__-image" height="110" width="200"><br>
+                        </div>
+                        <div style="text-align: center">
+                            <a id="main_formset-__prefix__" onchange="preview_gallery(this.id)" class="btn btn-outline-success btn-file" style="margin: 15px 50px 15px 50px; min-width: 150px">Загрузить
+                                <input type="file" name="main_formset-__prefix__-image" accept="image/*" id="id_main_formset-__prefix__-image">
+                            </a>
+                        </div>
+                        <div style="display: flex; justify-content: right">
+                            <label>URL:</label>
+                            <input type="text" name="main_formset-__prefix__-url" id="id_main_formset-__prefix__-url" placeholder="URL">
+                        </div>
+                        <div style="display: flex; justify-content: right; padding-top: 5px">
+                            <label>Текст:</label>
+                            <input type="text" name="main_formset-__prefix__-text" id="id_main_formset-__prefix__-text" placeholder="Text">
+                        </div>
+                    </div>
+
+                </div>
+
+
+    <div style="justify-content: left; display: flex; padding-bottom: 20px; padding-top: 20px">
+        <div style="padding-right: 40px; width: 40%; text-align: center">
+        {{ main_banner.turning_speed.label }}
+        {{ main_banner.turning_speed }}
+    </div>
+            <input type="submit" form="form_main" id="submit-btn" value="Изменить главный баннер" class="btn btn-secondary">
+    </div>
+    </div>
+        <!-- END FORMSET MAIN BANENR-->
+
+    </form>
+<!-- END MAIN BANNER-->
+
+<!-- BACKGROUND BANNER-->
+
+    <form id="form_background" enctype="multipart/form-data" action="{% url 'cinema:update_background' %}" method="post" style="padding-top: 20px; margin: 0 70px 0 70px">
+        {% csrf_token %}
+    <div class="row" style="text-align: center">
+        <h3>
+            {{ backgroundbanner.instance.title }}
+        </h3>
+    </div>
+    <div class="row" style="border-radius: 20px; border: 2px solid black;">
+                <label>Размер 2000х3000</label>
+    <div class="col-2" style="padding-top: 70px">
+        {{ backgroundbanner.type }}
+    </div>
+    <div class="col-sm-3" style="padding-right: 300px">
+            <img id="logo_preview" src="{{ backgroundbanner.instance.image.url }}" width="300px" height="200px" style="max-width: 300px ">
+        </div>
+        <div class="col-sm-2" style="display: flex; align-items: center">
+            <button type="button" onchange="showPreview(event)" class="btn btn-outline-success btn-file" style="display: block; min-width: 100px">
+                        Загрузить <input type="file" name="{{ backgroundbanner.image.name }}" accept="image/*"
+                                         id="id-{{ backgroundbanner.image.name }}" value="{{ backgroundbanner.image.value }}">
+                    </button>
+        </div>
+               <div class="col-sm-2" style="display: flex; align-items: center">
+                 <button type="button" id="delete-logo" class="btn btn-outline-danger btn-file" style="display: block; width: 100px; min-width: 100px">Удалить</button>
+            </div>
+        <div class="row" style="padding-top: 20px; padding-bottom: 20px; justify-content: center">
+                 <input type="submit" style="width: auto" form="form_background" id="submit-btn" value="Изменить баннер" class="btn btn-secondary">
+    </div>
+    </div>
+    </form>
+
+<!-- END BACKGROUND  BANNER-->
+
+     <!-- NEWS BANNER -->
+    <form id="form-news" enctype="multipart/form-data" action="{% url 'cinema:update_news_banner' %}" method="post" style="padding-top: 20px; margin: 0 70px 0 70px; padding-bottom: 50px">
+        {% csrf_token %}
+    <div class="row" style="text-align: center">
+        <h3>
+            {{ news_banner.instance.title }}
+        </h3>
+    </div>
+    <div class="row" style="border-radius: 20px; border: 2px solid black;">
+        <div style="text-align: right; margin-top: 20px; height: auto; ">
+            <label class="checkbox-ios">
+                {{ news_banner.turning_on }}
+                <span class="checkbox-ios-switch">
+                </span>
+            </label>
+        </div>
+        <label>Размер 1000х190</label>
+    <div>
+            <button type="button" class="add-more-img btn btn-block btn-success" id="add_more_news" style="width: 100px; min-width: 100px; display: block">Добавить</button>
+        </div>
+        <!--FORMSET MAIN MANNER -->
+        <div id="news_form_set">
+                   {{ news_banner_formset.management_form }}
+                               {% for form in news_banner_formset %}
+                <div id="{{ form.prefix }}-form" style="display: inline-block">
+                        {% for hidden in form.hidden_fields %}
+                            {{ hidden }}
+                        {% endfor %}
+                        <div style="text-align: right; padding-right: 15px">
+                            <option value="" style="color: red; text-align: center; display: none" id="{{ form.prefix }}-validation"><b>Размеры не корректны!</b></option>
+                            <a class="btn-delete-form" onclick="delete_image(this.id)" id="{{ form.prefix }}">
+                                <img class="delete-gallery-form" src={% static 'cinema/dist/img/deleteimg.png' %}>
+                            </a>
+                        </div>
+{#                        <input type="hidden" name="{{ form.prefix }}-id" id="{{ form.prefix }}-id">#}
+                        <div style="text-align: center">
+                            <img src="{{ form.instance.image.url }}" id="{{ form.prefix }}-image" height="110" width="200"><br>
+                        </div>
+                        <div style="text-align: center">
+                            <a id="{{ form.prefix }}" onchange="preview_gallery(this.id)" class="btn btn-outline-success btn-file" style="margin: 15px 50px 15px 50px; min-width: 150px">Загрузить
+                                <input type="file" name="{{ form.prefix }}-image" accept="image/*" id="id_{{ form.prefix }}-image" value="{{ form.image.value }}">
+                            </a>
+                        </div>
+                        <div style="display: flex; justify-content: right">
+                            <label>URL:</label>
+{#                                <div>{{ form.url }}</div>#}
+                            <input type="text" name="{{ form.prefix }}-url" value="{{ form.url.value }}" id="id_{{ form.prefix }}-url" placeholder="URL">
+                        </div>
+                        <div style="display: flex; justify-content: right">
+                        </div>
+                    </div>
+{% endfor %}
+
+                   </div>
+                       <div class="delete-list" style="display: none"></div>
+
+                <div id="news_empty_form" style="display: none">
+                    <div id="news_formset-__prefix__-form" style="display: inline-block">
+                        <div style="text-align: right; padding-right: 15px">
+                            <option value="" style="color: red; text-align: center; display: none" id="news_formset-__prefix__-validation"><b>Размеры не корректны!</b></option>
+                            <a class="btn-delete-form" onclick="delete_image(this.id)" id="form-__prefix__">
+                                <img class="delete-gallery-form" src={% static 'cinema/dist/img/deleteimg.png' %}>
+                            </a>
+                        </div>
+                        <input type="hidden" name="news_formset-__prefix__-id" id="news_formset-__prefix__-id">
+                        <div style="text-align: center">
+                            <img src="{% static 'cinema/dist/img/preview_upload.png' %}" id="news_formset-__prefix__-image" height="110" width="200"><br>
+                        </div>
+                        <div style="text-align: center">
+                            <a id="news_formset-__prefix__" onchange="preview_gallery(this.id)" class="btn btn-outline-success btn-file" style="margin: 15px 50px 15px 50px; min-width: 150px">Загрузить
+                                <input type="file" name="news_formset-__prefix__-image" accept="image/*" id="id_news_formset-__prefix__-image">
+                            </a>
+                        </div>
+                        <div style="text-align: right">
+                            <label>URL:</label>
+                            <input type="text" name="news_formset-__prefix__-url" id="id_news_formset-__prefix__-url" placeholder="URL">
+                        </div>
+                    </div>
+
+                </div>
+{#     <div>#}
+{#            <button type="button" class="add-more-img btn btn-block btn-success" id="add_more" style="width: 100px; min-width: 100px; display: block">Добавить</button>#}
+{#        </div>#}
+
+    <div style="justify-content: left; display: flex; padding-bottom: 20px; padding-top: 20px">
+        <div style="padding-right: 40px; width: 40%; text-align: center">
+        {{ news_banner.turning_speed.label }}
+        {{ news_banner.turning_speed }}
+    </div>
+{#        <button class="btn btn-secondary" type="submit">#}
+{#            Изменить баннер Акции#}
+{#        </button>#}
+            <input type="submit" id="submit-btn" value="Изменить баннер Акции" class="btn btn-secondary" form="form-news">
+    </div>
+    </div>
+        <!-- END FORMSET NEWS BANENR-->
+
+    </form>
+<!-- END NEWS BANNER-->
+
+
+
+<script src="{% static 'cinema/plugins/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'cinema/script_creating/contacts_preview.js' %}"></script>
+        <script src="{% static 'cinema/script_creating/banner_preview.js' %}"></script>
+        <script src="{% static 'cinema/script_creating/formset_banners.js' %}"></script>
+{#</div>#}
+{% endblock %}
+

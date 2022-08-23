@@ -1,0 +1,139 @@
+{% extends 'cinema/layout/base.html' %}
+{% load static %}
+{% block title %}Sale{% endblock %}
+{% block content %}
+<div style="text-align: right; padding-top: 10px; margin-right: 35px">
+                <a href="{% url 'cinema:create_page' %}" style="color: white"> <button type="button" class="btn btn-block btn-success" style="width: 200px; display: inline-block">
+                    Создать новую <span style="font-size: 22px"><b>+</b></span>
+                </button>
+                </a>
+</div>
+    <h2 style="text-align:  center">Список страниц</h2>
+        <div class="card-body" style="margin: 0 100px; max-width: 1200px">
+                <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4"><div class="row"><div class="col-sm-12 col-md-6"></div><div class="col-sm-12 col-md-6"></div></div><div class="row"><div class="col-sm-12"><table id="example2" class="table table-bordered table-hover dataTable dtr-inline" aria-describedby="example2_info">
+                  <thead>
+                  <tr><th class="sorting sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">Название</th><th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Дата создания</th><th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Статус</th></tr>
+                  </thead>
+                  <tbody>
+                  {% if main_page %}
+                  <tr class="odd">
+                    <td class="dtr-control sorting_1" tabindex="0">{{ main_page.title }}</td>
+                    <td>{{ main_page.date }}</td>
+                      {% if main_page.status %}
+                            <td>ВКЛ</td>
+                          {% else %}
+                          <td>ВЫКЛ</td>
+                      {% endif %}
+                    <td style="width: 30px; justify-content: center">
+                        <a href="{% url 'cinema:update_main_page' main_page.id %}">
+                         <button type="button" class="btn btn-outline-info">
+
+                              <img src="{% static 'cinema/dist/img/editpencil1.png' %}" alt="edit hall" width="25px" height="25px">
+                </button>
+                        </a>
+
+                    <td style="width: 30px; justify-content: center">
+{#                        {% url 'cinema:update_main' main_page.id %}#}
+                        </td>
+                  </tr>
+                  {% endif %}
+                  {% for page in pages %}
+                      {% if not page.can_delete %}
+                  <tr class="odd">
+                    <td class="dtr-control sorting_1" tabindex="0">{{ page.title_ru }}</td>
+                    <td>{{ page.date }}</td>
+                      {% if page.status %}
+                    <td>ВКЛ</td>
+                          {% else %}
+                          <td>ВЫКЛ</td>
+                      {% endif %}
+                  <td style="width: 30px; justify-content: center">
+                          <a href="{% url 'cinema:update_page' page.id %}">
+                        <button type="button" class="btn btn-outline-info">
+                              <img src="{% static 'cinema/dist/img/editpencil1.png' %}" alt="edit hall" width="25px" height="25px">
+                </button>
+                          </a>
+                    </td>
+                      {% endif %}
+                  {% endfor %}
+                  </tr>
+                      <!-- CONTACTS -->
+                      <tr class="odd">
+                    <td class="dtr-control sorting_1" tabindex="0"> Контакты </td>
+                    <td> Контакт формсет дата создания </td>
+{#                      {% if page.status %}#}
+                    <td>ВКЛ</td>
+{#                          {% else %}#}
+{#                          <td>ВЫКЛ</td>#}
+{#                      {% endif %}#}
+                  <td style="width: 30px; justify-content: center">
+                      <a href="{% url 'cinema:update_contacts' %}">
+                        <button type="button" class="btn btn-outline-info">
+                              <img src="{% static 'cinema/dist/img/editpencil1.png' %}" alt="edit hall" width="25px" height="25px">
+                </button>
+                      </a>
+                    </td>
+                    <td style="width: 30px; justify-content: center">
+                    </td>
+                  </tr>
+
+                  {% for page in pages %}
+                    {% if page.can_delete %}
+                  <tr class="odd">
+                    <td class="dtr-control sorting_1" tabindex="0">{{ page.title_ru }}</td>
+                    <td>{{ page.date }}</td>
+                      {% if page.status %}
+                    <td>ВКЛ</td>
+                          {% else %}
+                          <td>ВЫКЛ</td>
+                      {% endif %}
+                  <td style="width: 30px; justify-content: center">
+                      <a href="{% url 'cinema:update_page' page.id %}">
+                        <button type="button" class="btn btn-outline-info">
+                              <img src="{% static 'cinema/dist/img/editpencil1.png' %}" alt="edit hall" width="25px" height="25px">
+                </button>
+                      </a>
+
+                    </td>
+                    <td style="width: 30px; justify-content: center">
+                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                                data-bs-target="#deleteModal100-{{ page.id }}">
+                              <img src="{% static 'cinema/dist/img/deletebucket.png' %}" alt="delete hall" width="25px" height="25px">
+                              </button>
+                    </td>
+                  </tr>
+                      {% endif %}
+                  {% endfor %}
+                  </tbody>
+                </table>
+                </div>
+                </div>
+                </div>
+        </div>
+
+        <!-- MODAL DELETE HALL-->
+{% for new in pages %}
+        <div class="modal fade" id="deleteModal100-{{ new.id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModalLabel" style="display: none;" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                          <div class="modal-header bg-dark">
+                            <h5 class="modal-title" id="deleteModal1Label-{{ new.id }}">Подтвердите удаление страницы</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <form method="post" action="{% url 'cinema:delete_new_or_sale' new.id %}">
+                              {% csrf_token %}
+                              <div class="modal-body">
+                                  <b>{{ new.title }}</b> будет удаленa безвозвратно. Подтвердите свои действия!
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                                <button type="submit" class="btn btn-danger">Удалить</button>
+                              </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+        <!-- ENDMODAL DELETE NEW-->
+    {% endfor %}
+
+{% endblock %}

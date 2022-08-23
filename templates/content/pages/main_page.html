@@ -1,0 +1,139 @@
+{% extends 'content/layout/base.html' %}
+{% load static %}
+{% load static i18n %}
+{% block title %} Main Page {% endblock %}
+
+{% block action %}
+<div class="row" style="margin-left: 0; margin-right: 0"><a href="#" style="padding: 0"><img src="{% static 'content/dist/img/sale.png' %}" height="80px" width="100%" alt="banner"></a></div>
+{% endblock %}
+
+    {% block content %}
+
+<div class="row" style="justify-content: center">
+    <div class="col-sm-8 col-md-8 col-lg-8">
+
+    <!-- CAROUSEL -->
+    {% for banner in banners %}
+      {% if banner.news_or_main == 'main'  %}
+            <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+                <a href="#">
+                    <img src="{% static 'content/dist/img/android.png' %}" alt="" style="position: absolute; bottom: 5%; right: 10%; width: 100px; z-index: 100">
+                </a>
+                <a href="#">
+                    <img  style="position: absolute; bottom: 5%; right: 20%; width: 100px; z-index: 100" src="{% static 'content/dist/img/apple.png' %}" alt="">
+                </a>
+  <div class="carousel-inner">
+    <div class="carousel-item active" data-bs-interval="{{ banner.turning_speed }}000">
+{% for i in banner.banner_set.all|slice:':1' %}
+      <img src="{{ i.image.url }}" class="d-block w-100" height="400px" alt="...">
+        <h5 style="position: absolute; top: 50%; left: 10%; font-size: 35px; color: black; ">Тор повелитель молота и молнии</h5>
+        {% endfor %}
+    </div>
+      {% for photo in banner.banner_set.all|slice:"1:" %}
+    <div class="carousel-item" data-bs-interval="{{ banner.first.turning_speed }}000">
+      <img src="{{ photo.image.url }}" class="d-block w-100" height="400px" alt="...">
+            <h5 style="position: absolute; top: 50%; left: 10%; font-size: 35px; color: black; ">Гарри Поттер и Антибиотики</h5>
+
+    </div>
+      {% endfor %}
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+    {% endif %}
+    {% endfor %}
+        <!-- END CAROUSEL-->
+
+
+    <!-- MOVIE TODAY -->
+        <h3 style="text-align: center; padding: 25px 0;"><b>Смотрите сегодня,</b> {{ today }}</h3>
+        <div class="row">
+            {% for film in sessions %}
+                {% if film.film.date_of_premier %}
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-3" style="vertical-align: middle; text-align: center; margin-bottom: 10px">
+                        <a href="{% url 'content:film' film.film.id %}" style="color: black">
+                        <img src="{{ film.film.logo.url }}" width="250px" height="300px" alt="">
+                        <h4>{{ film.film.title }}</h4>
+                            </a>
+                        <a href="#" class="btn btn-success">Купить билет</a>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+    <!-- END MOVIE TODAY -->
+
+        <!-- MOVIE SOON -->
+        <h3 style="text-align: center; padding: 25px 0;"><b>Смотрите скоро</b></h3>
+        <div class="row">
+            {% for film in sessions %}
+                {% if not film.film.date_of_premier %}
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-3" style="text-align: center">
+                        <img src="{{ film.film.logo.url }}" width="250" height="300" alt="">
+                        <h4>{{ film.film.title }}</h4>
+{#                        <a href="#" class="btn btn-success">Купить билет</a>#}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+    <!-- END MOVIE SOON -->
+
+
+
+{#    </div>#}
+{#        </div>#}
+
+                <h3 style="text-align: center; padding: 25px 0;"><b>Новости и акции</b></h3>
+
+
+        <!-- NEWS CAROUSEL -->
+    {% for banner in banners %}
+      {% if banner.news_or_main == 'news'  %}
+            <div id="carouselExampleInterval1" class="carousel slide" data-bs-ride="carousel1">
+  <div class="carousel-inner">
+    <div class="carousel-item active" data-bs-interval="{{ banner.turning_speed }}000">
+
+     {% for i in banner.banner_set.all|slice:':1' %}
+      <img src="{{ i.image.url }}" class="d-block w-100" height="400px" alt="...">
+        <h5 style="position: absolute; top: 50%; left: 10%; font-size: 35px; color: black; ">Тор повелитель молота и молнии</h5>
+        {% endfor %}
+    </div>
+      {% for photo in banner.banner_set.all|slice:"1:" %}
+    <div class="carousel-item" data-bs-interval="{{ banner.first.turning_speed }}000">
+      <img src="{{ photo.image.url }}" class="d-block w-100" height="400px" alt="...">
+            <h5 style="position: absolute; top: 50%; left: 10%; font-size: 35px; color: black; ">Гарри Поттер и Антибиотики</h5>
+
+    </div>
+      {% endfor %}
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval1" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval1" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+    {% endif %}
+    {% endfor %}
+        <!-- END NEWS CAROUSEL-->
+
+    <!-- CONTEXT ADV -->
+        <div class="row" style="justify-content: center; margin: 50px 0;">
+            <div class="col-sm-8 col-md-8 col-lg-8"><img src="{% static 'content/dist/img/contextadv.png' %}" width="100%" alt=""></div>
+        </div>
+    <!-- END CONTEXT ADV -->
+        <div class="row">
+            <p>{{ main_page.seo_text }}</p>
+        </div>
+</div>
+    </div>
+    {% endblock %}

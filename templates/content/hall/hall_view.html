@@ -1,0 +1,85 @@
+{% extends 'content/layout/base.html' %}
+{% load i18n %}
+{% load static %}
+{% block title %} {{ hall.title }} {% endblock %}
+
+
+
+{% block content %}
+    <div class="container-fluid">
+<div class="row" style="margin: auto">
+    <img src="{{ hall.banner.url }}" alt="" height="400px" width="100%">
+</div>
+    <div class="col-sm-12">
+    <div class="row" style="justify-content: center">
+    <div class="col-sm-2">
+        <div class="row" style="justify-content: center">
+            <div class="col-sm-8" style="padding-top: 20px"><img src="{% static 'content/dist/img/adversting.png' %}" alt="" width="100%"></div>
+            <div class="col-sm-8" style="padding-top: 20px">
+                <div class="row" style="padding-left: 10px; margin-bottom: 10px">{% trans "Смотрите сегодня" %}:</div>
+                    {% for s in hall.session_set.all %}
+                    <div class="row hall_list" style="border: 1px solid black; padding-left: 10px; margin: 0 10px">
+                        <a style="text-decoration: none; color: black" href="#">{{ s.name }} <img class="tree"
+                                src="{% static 'content/dist/img/tree.png' %}" width="15px" style="float: right; padding-top: 3px; display: none "></a>
+                    </div>
+            {% endfor %}
+                <a href="#" class="btn btn-success" style="margin-top: 20px">{% trans "Расписание всех сеансов" %}</a>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="row" style="text-align: center; padding-top: 20px">
+            <h3>{{ hall.title }}</h3>
+        </div>
+        <div class="row" style="padding-top: 20px">
+            {{ hall.hall_describe }}
+        </div>
+        <div class="row" style="margin: 30px 0">
+            <h3 style="text-align: center">{% trans "Карта зала" %}</h3>
+            <div class="row">
+                <div class="col-sm-12">
+                        <div class="row">
+                            <img src="{{ hall.map.url }}" alt="">
+{#                                                        <hr color="white">#}
+{##}
+{#                            <div class="col-sm-5"><div class="row"><span style="text-decoration: underline; color: deepskyblue">Детская комната</span></div>#}
+{#                            <div class="row" style="color: white">#}
+{#                                <p><span>Lorem ipsum dolor sit amet, consectetur  vero!</span><span>Accusamus ad commodi explicabo harum hic, molestiae natus praesentium qui sed sunt! Aliquid autem deleniti labore nobis omnis perspiciatis recusandae suscipit? Consequatur, cupiditate dicta error ex iste natus quibusdam quidem.</span><span>Aperiam beatae culpa distinctio earum eligendi, facere fuga illo impedit in ipsa iure minima minus necessitatibus, numquam odit qui quod reiciendis saepe similique tempore vel voluptates voluptatibus. Excepturi id, molestias.</span></p>#}
+{#                            </div>#}
+                            </div>
+                        </div>
+                </div>
+            </div>
+        <div class="row">
+            <h3 style="text-align: center;">{% trans "Фотогалерея" %}</h3>
+            <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+{#      {% for img in gallery %}#}
+    <div class="carousel-item active" data-bs-interval="3000">
+      <img src="{{ hall.pictures.photo_set.first.image.url }}" class="d-block w-100" height="500px" alt="...">
+    </div>
+      {% for photo in hall.pictures.photo_set.all|slice:"1:" %}
+    <div class="carousel-item" data-bs-interval="3000">
+      <img src="{{ photo.image.url }}" class="d-block w-100" height="500px" alt="...">
+    </div>
+      {% endfor %}
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+        </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'content/layout/base.html' %}
+{% load static %}
+{% load i18n %}
+{% load static i18n %}
+
+{% block title %}{% trans "Список кинотеатров" %} {% endblock %}
+
+{% block content %}
+<h2 style="text-align: center">{% trans "Список кинотеатров" %}</h2>
+    <div class="col-sm-12">
+<div class="row" style="justify-content: center">
+    <div class="col-sm-6">
+        <div class="row" style="justify-content: space-around; padding-top: 50px">
+            {% for cinema in cinemas %}
+            <div class="col-5">
+                <a href="{% url 'content:cinema' cinema.id %}" style="text-decoration: none; color: gray">
+                <img src="{{ cinema.logo.url }}" alt="" width="100%" height="80%">
+                <h3 style="text-align: center;">{{ cinema.name }}</h3>
+                    </a>
+            </div>
+
+            {% endfor %}
+        </div>
+    </div>
+    <div class="col-sm-2">
+        <div class="row" style="justify-content: center">
+            <div class="col-sm-8" style="padding-top: 20px"><img src="{% static 'content/dist/img/adversting.png' %}" alt="" width="100%"></div>
+            <div class="col-sm-8" style="padding-top: 20px"><img src="{% static 'content/dist/img/vkgroup2.png' %}" alt="" width="100%"></div>
+            <div class="col-sm-8" style="padding-top: 20px"><img src="{% static 'content/dist/img/vkgroup.png' %}" alt="" width="100%"></div>
+
+        </div>
+    </div>
+    </div>
+</div>
+{% endblock %}

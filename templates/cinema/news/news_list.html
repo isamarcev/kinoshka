@@ -1,0 +1,76 @@
+{% extends 'cinema/layout/base.html' %}
+{% load static %}
+{% block title %}News{% endblock %}
+{% block content %}
+<div style="text-align: right; padding-top: 10px; margin-right: 35px">
+                <button type="button" class="btn btn-block btn-success" style="width: 200px; display: inline-block">
+                    <a href="{% url 'cinema:create_new' %}" style="color: white">Добавить новость <span style="font-size: 22px"><b>+</b></span></a>
+                </button>
+</div>
+    <h2 style="text-align:  center">Список новостей</h2>
+    <div class="card-body" style="margin: 0 100px; max-width: 1200px">
+        <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
+            <div class="row">
+                <table id="news" class="table table-bordered table-hover dtr-inline" aria-describedby="users">
+                    <thead>
+                    <tr><th class="sorting sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">Название</th><th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Дата создания</th><th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Статус</th></tr>
+                    </thead>
+                  <tbody>
+                  {% for new in news %}
+                  <tr class="odd">
+                    <td class="dtr-control sorting_1" tabindex="0">{{ new.title }}</td>
+                    <td>{{ new.date }}</td>
+                      {% if new.is_active %}
+                    <td>ВКЛ</td>
+                          {% else %}
+                          <td>ВЫКЛ</td>
+                      {% endif %}
+                    <td style="width: 30px; justify-content: center">
+
+                        <button type="button" class="btn btn-outline-info">
+
+                          <a href="{% url 'cinema:update_new' new.id %}">
+                              <img src="{% static 'cinema/dist/img/editpencil1.png' %}" alt="edit hall" width="25px" height="25px">
+                          </a>
+                </button>
+                    </td>
+                    <td style="width: 30px; justify-content: center">
+                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                                data-bs-target="#deleteModal100-{{ new.id }}">
+                              <img src="{% static 'cinema/dist/img/deletebucket.png' %}" alt="delete hall" width="25px" height="25px">
+                              </button>
+                    </a>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+                </div>
+                </div>
+    <!-- MODAL DELETE HALL-->
+{% for new in news %}
+        <div class="modal fade" id="deleteModal100-{{ new.id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModalLabel" style="display: none;" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                          <div class="modal-header bg-dark">
+                            <h5 class="modal-title" id="deleteModal1Label-{{ new.id }}">Подтвердите удаление новости</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <form method="post" action="{% url 'cinema:delete_new_or_sale' new.id %}">
+                              {% csrf_token %}
+                              <div class="modal-body">
+                                  <b>{{ new.title }}</b> будет удаленa безвозвратно. Подтвердите свои действия!
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                                <button type="submit" class="btn btn-danger">Удалить</button>
+                              </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+        <!-- ENDMODAL DELETE NEW-->
+    {% endfor %}
+
+{% endblock %}

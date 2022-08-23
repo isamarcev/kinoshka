@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %} CMS{% endblock %}</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/static/cinema/plugins/fontawesome-free/css/all.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="/static/cinema/dist/css/adminlte.min.css">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="/static/cinema/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+</head>
+
+<body class="login-page" style="min-height: 496.781px;">
+{% load static %}
+
+
+<div class="login-box">
+  <div class="login-logo">
+    <a href="{% url 'content:main' %}"><b>Cinema</b>CMS</a>
+  </div>
+  <!-- /.login-logo -->
+  <div class="card">
+    <div class="card-body login-card-body">
+      <p class="login-box-msg">Sign in to start your session</p>
+
+{% if form.errors %}
+<p>Your username and password didn't match. Please try again.</p>
+{% endif %}
+
+{% if next %}
+    {% if user.is_authenticated %}
+    <p>Your account doesn't have access to thi ge. To proceed,
+    please login with an account that has access.</p>
+    {% else %}
+    <p>Please login to see this page.</p>
+    {% endif %}
+{% endif %}
+
+<form method="post">
+{% csrf_token %}
+<table>
+{#    {% for f in form %}#}
+<tr>
+    <td class="col-2>{{ form.username.label_tag }}</td>
+    <td>{{ form.username }}</td>
+</tr>
+{#    {% endfor %}#}
+<tr>
+    <td class="col-2>{{ form.password.label_tag }}</td>
+    <td>{{ form.password }}</td>
+</tr>
+</table>
+<div class="row" style="justify-content: center;padding-top: 20px">
+<input type="submit" value="login">
+<input type="hidden" name="next" value="{{ next }}">
+    </div>
+</form>
+
+    </div></div></div>
+
+<p><a href="{% url 'users:register' %}">Lost password?</a></p>
+<p>Еще не с нами?<a href="{% url 'users:register' %}"> Регистрация</a></p>
+
+{#<!-- jQuery -->#}
+<script src="../../../cinema/static/cinema/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="../../../cinema/static/cinema/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="../../../cinema/static/cinema/dist/js/adminlte.min.js"></script>
+
+
+</body>
+
+</html>

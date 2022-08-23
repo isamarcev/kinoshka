@@ -1,0 +1,172 @@
+{% extends 'cinema/layout/base.html' %}
+{% load static %}
+{% block title %}Создание зала{% endblock %}
+{% block content %}
+
+    <div style="float: right; padding-top: 20px; padding-right: 30px">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="ru-tab" data-bs-toggle="tab" data-bs-target="#ru" type="button" role="tab" aria-controls="ru" aria-selected="true">Русский</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="uk-tab" data-bs-toggle="tab" data-bs-target="#uk" type="button" role="tab" aria-controls="uk" aria-selected="false">Украинский</button>
+          </li>
+        </ul>
+    </div>
+    <div class="card card-outline card-danger" style="margin-bottom: 0;padding-bottom: 0;display: none;">
+        <div class="card-body" style="text-align: center">
+            <font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><b>Заполните поля в украинской версии!</b></font></font>
+        </div>
+    </div>
+
+    <form id="form-container" enctype="multipart/form-data" method="post" style="padding-top: 70px; margin: 0 70px 0 70px; max-height: content-box">
+
+    {%  for hidden_field in halls.hidden_fields %}
+        {{ hidden_field.errors }}
+            {{ hidden_field }}
+        {% endfor %}
+
+        {% csrf_token %}
+
+    <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="ru" role="tabpanel" aria-labelledby="ru-tab">
+                    <div class="row" style="margin-bottom: 40px; padding-top: 20px">
+
+                        <div class="col-2">
+                            {{ halls.title_ru.label_tag }}
+                        </div>
+                        <div class="col-sm-6">
+                            {{ halls.title_ru }}
+                        </div>
+                    </div>
+                    <div class="row" style="margin-bottom: 40px">
+
+                        <div class="col-2">
+                            {{ halls.hall_describe_ru.label_tag}}
+                        </div>
+                        <div class="col-sm-6">
+                            {{ halls.hall_describe_ru}}
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="uk" role="tabpanel" aria-labelledby="uk-tab">
+                    <div class="row" style="margin-bottom: 40px; padding-top: 20px">
+                        <div class="col-2">
+                            {{ halls.title_uk.label_tag }}
+                        </div>
+                        <div class="col-sm-6">
+                            {{ halls.title_uk }}
+                        </div>
+                    </div>
+                    <div class="row" style="margin-bottom: 40px">
+                        <div class="col-2">
+                            {{ halls.hall_describe_uk.label_tag }}
+                        </div>
+                        <div class="col-sm-6">
+                            {{ halls.hall_describe_uk }}
+                        </div>
+                    </div>
+            </div>
+    </div>
+    <!-- end name, describe, convenience-->
+
+    <!-- LOGO FORM-->
+    <div class="row" style="display: flex">
+        <div class="col-sm-2" ><p style="align-items: center" ><b>Схема зала:</b></p></div>
+        <div class="col-sm-3" style="padding-right: 300px">
+            <img id="logo_preview" src="{% static 'cinema/dist/img/preview_upload.png' %}" width="300px" height="200px"
+                 style="max-width: 300px ">
+        </div>
+        <div class="col-sm-2" style="display: flex; align-items: center">
+            <button type="button" onchange="showPreview(event)" class="btn btn-outline-success btn-file" style="display: block; min-width: 100px">
+                        Загрузить <input type="file" name="{{ halls.map.name }}" accept="image/*" required=""
+                                         id="id-{{ halls.map.name }}">
+                    </button>
+        </div>
+               <div class="col-sm-2" style="display: flex; align-items: center">
+                 <button type="button" id="delete-logo" class="btn btn-outline-danger btn-file" style="display: block; width: 100px; min-width: 100px">Удалить</button>
+            </div>
+    </div>
+    <!-- END LOGO-->
+
+    <!-- BANNER FORM-->
+    <div class="row" style="display: flex; margin-top: 50px">
+        <div class="col-sm-2" > <p style="align-content: center" ><b>Верхний баннер:</b></p></div>
+        <div class="col-sm-3" style="padding-right: 300px">
+            <img id="banner_preview" src="{% static 'cinema/dist/img/preview_upload.png' %}" width="300px" height="200px" style="max-width: 300px ">
+        </div>
+        <div class="col-sm-2" style="display: flex; align-items: center">
+            <button type="button" onchange="showPreviewBanner(event)" class="btn btn-outline-success btn-file" style="display: block; min-width: 100px">
+                        Загрузить <input type="file" name="banner" accept="image/*" required="" id="id-banner">
+                    </button>
+        </div>
+               <div class="col-sm-2" style="display: flex; align-items: center">
+                 <button type="button" id="delete-banner" class="btn btn-outline-danger btn-file" style="display: block; width: 100px; min-width: 100px">Удалить</button>
+            </div>
+    </div>
+    <!-- END BANNER-->
+
+    <!-- FORMSET GALLERY-->
+        <p><b>Галерея картинок</b></p>
+               <div id="gallery" style="max-width: 100%; margin-bottom: 30px" >
+                   <div class="row">
+                   <div><p><b>Размер 1000х190</b></p></div>
+                                <button type="button" class="add-more-img btn btn-block btn-success" id="add_more" style="width: 100px; min-width: 100px; display: block">Добавить</button>
+    <!-- form.visible fields go here -->
+                   </div>
+                   <div id="form_set">
+                           {{ formset.management_form }}
+                       {% for form in formset %}
+                           {% for hidden in form.hidden_fields %}
+                               {{ hidden }}
+                           {% endfor %}
+                       {% endfor %}
+                   </div>
+
+               <div class="delete-list" style="display: none"></div>
+
+                <div id="empty_form" style="display: none">
+                    <div id="form-__prefix__-form" style="display: inline-block">
+                        <div style="text-align: right; padding-right: 15px">
+                            <option value="" style="color: red; text-align: center; display: none" id="form-__prefix__-validation"><b>Размеры не корректны!</b></option>
+                            <a class="btn-delete-form" onclick="delete_image(this.id)" id="form-__prefix__">
+                                <img class="delete-gallery-form" src={% static 'cinema/dist/img/deleteimg.png' %}>
+                            </a>
+                        </div>
+                        <input type="hidden" name="form-__prefix__-id" id="id_form-__prefix__-id">
+                        <div style="text-align: center">
+                            <img src="{% static 'cinema/dist/img/preview_upload.png' %}" id="form-__prefix__-image" height="110" width="200"><br>
+                        </div>
+                        <div style="text-align: center">
+                            <a id="form-__prefix__" onchange="preview_gallery(this.id)" class="btn btn-outline-success btn-file" style="margin: 15px 50px 15px 50px; min-width: 150px">Загрузить
+                                <input type="file" name="form-__prefix__-image" accept="image/*" id="id_form-__prefix__-image">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+    </div>
+    <!-- DELETE LIST-->
+
+<!-- SEO TEXT -->
+    <h5>SEO block</h5>
+{% for s in seo %}
+            {{ s.errors }}
+            <div class="row" style="max-width: 100%; margin-bottom: 30px" >
+                <div class="col-sm-2" style="text-align: right;">{{ s.label_tag }}</div>
+                <div class="col-6">{{ s }}</div>
+            </div>
+        {% endfor %}
+        <div class="row" style="justify-content: center;width: 100%; padding-top: 0; padding-bottom: 50px;">
+            <div class="col-sm-2" style="justify-content: center"><input type="submit" id="submit-btn" value="Создать зал" class="btn btn-primary"></div>
+            <div class="col-sm-2" style="justify-content: center"><a href="{% url 'cinema:cinemas' %}" role="button" class="btn btn-secondary" style="justify-content: center" >Отмена</a></div>
+            </div>
+    </form>
+<!-- END SEO TEXT -->
+
+
+
+<script src="{% static 'cinema/plugins/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'cinema/script_creating/image_preview.js' %}"></script>
+        <script src="{% static 'cinema/script_creating/formset_gallery.js' %}"></script>
+
+{% endblock %}

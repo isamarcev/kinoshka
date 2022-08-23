@@ -1,0 +1,112 @@
+{% extends 'cinema/layout/base.html' %}
+{% load static %}
+{% block title %}Пользователи{% endblock %}
+{% block content %}
+
+    <div style="width: 80%; justify-content: center; margin: auto; padding-top: 50px">
+    <form id="form-container" enctype="multipart/form-data" method="post" style="padding-top: 70px; margin: 0 70px 0 70px; max-height: content-box">
+            {% csrf_token %}
+
+        <div class="row" >
+        <div class="col-2">
+            {{ user.first_name.label_tag }}
+        </div>
+        <div class="col-sm-4">
+            {{ user.first_name }}
+        </div>
+    <div class="col-2">
+            {{ user.language.label_tag }}
+        </div>
+        <div class="col-sm-2" >
+            {{ user.language }}
+        </div>
+    </div>
+     <div class="row" >
+        <div class="col-2">
+            {{ user.last_name.label_tag }}
+        </div>
+        <div class="col-sm-4">
+            {{ user.last_name }}
+        </div>
+    <div class="col-2">
+            {{ user.sex.label_tag }}
+        </div>
+        <div class="col-sm-2" style="display: inline-list-item">
+            {{ user.sex }}
+        </div>
+    </div>
+    <div class="row" style="padding-top: 20px">
+        <div class="col-2">
+            {{ user.username.label_tag }}
+        </div>
+        <div class="col-sm-4">
+            {{ user.username }}
+        </div>
+    <div class="col-2">
+            {{ user.phone.label_tag }}
+        </div>
+        <div class="col-sm-4" style="display: inline-list-item">
+            {{ user.phone }}
+        </div>
+    </div>
+        <div class="row" style="padding-top: 20px">
+        <div class="col-2">
+            {{ user.email.label_tag }}
+        </div>
+        <div class="col-sm-4">
+            {{ user.email }}
+        </div>
+    <div class="col-2">
+            {{ user.birthday.label_tag }}
+        </div>
+        <div class="col-sm-4">
+            {{ user.birthday }}
+        </div>
+    </div>
+        <div class="row" style="padding-top: 20px">
+        <div class="col-2">
+            {{ user.address.label_tag }}
+        </div>
+        <div class="col-sm-4">
+            {{ user.address }}
+        </div>
+    <div class="col-2">
+            {{ user.city.label_tag }}
+        </div>
+        <div class="col-sm-4">
+            {{ user.city }}
+        </div>
+
+    </div>
+        <div class="row" style="padding-top: 20px">
+        <div class="col-2">
+            {{ user.password.label_tag }}
+        </div>
+        <div class="col-sm-4">
+            {{ user.password }}
+        </div>
+    <div class="col-2">
+            {{ user.password2.label_tag }}
+        </div>
+        <div class="col-sm-4">
+            {{ user.password2 }}
+        </div>
+
+    </div>
+        <div class="row" style="padding-top: 20px">
+        <div class="col-2">
+            {{ user.number_of_card.label_tag }}
+        </div>
+        <div class="col-sm-4">
+            {{ user.number_of_card }}
+        </div>
+    </div>
+         <div class="row" style="text-align: center; width: 100%; padding-top: 50px;">
+            <div class="col"><input type="submit" id="submit-btn" value="Сохранить" class="btn btn-success"></div>
+{#            <div class="col-2" style="justify-content: center"><a href="{% url 'cinema:users' %}" role="button" class="btn btn-secondary" style="justify-content: center" >Отмена</a></div>#}
+            </div>
+    </form>
+    </div>
+    </div>
+
+{% endblock %}

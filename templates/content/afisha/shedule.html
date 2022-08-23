@@ -1,0 +1,178 @@
+{% extends 'content/layout/base.html' %}
+{% load static i18n %}
+{% block title %} Afisha {% endblock %}
+    {% block content %}
+<div class="row" style="justify-content: center; padding-top: 20px">
+    <div class="col-lg-3 col-md-3" style="align-items: center; padding-top: 7px; text-align: center; background: black; border-radius: 5px">
+        <div class="row" style="display: flex; flex-wrap: nowrap">
+            <div style="color: white;width:200px; font-weight: bold">Показывать только:</div>
+            <input type="checkbox" id="2d" style="width: 10px;" checked> <div style=" align-items: center; width:50px; height:25px; background: purple; border-radius: 3px; margin: 0 4px; color: white">2D</div>
+            <input type="checkbox" id="3d" style="width: 10px;" checked><div style=" width:50px;background: blue;height:25px; border-radius: 3px;  margin: 0 4px;color: white">3D</div>
+            <input type="checkbox" id="imax" style="width: 10px;" checked><div style=" width:50px;background: red; height:25px;border-radius: 3px;  margin: 0 4px;color: white">IMAX</div>
+        </div>
+    </div>
+    <div class="col-lg-5 col-md-5">
+    <div class="row">
+    <div class="col-lg-3 col-md-3" style="text-align: center">
+        <select id="cinema" class="form-select">
+            <option value="all" selected>- Кинотеатр:все -</option>
+            {% for cinema in cinemas %}
+                <option class="select-cinema" id="cinema-{{ cinema.id }}" value="{{ cinema.id }}" >{{ cinema.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-lg-3 col-md-3" style="text-align: center">
+        <select id="film" class="form-select">
+            <option value="all" selected>- Фильмы:все -</option>
+            {% for film in films %}
+                <option class="select-film" value="{{ film.id }}" id="film-{{ film.id }}">{{ film.title }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-lg-3 col-md-3" style="text-align: center">
+        <select id="select-halls" class="form-select">
+            <option value="false" selected>- Зал:все -</option>
+        </select>
+    </div>
+    <div class="col-lg-3 col-md-3" style="text-align: center">
+        <select id="date" class="form-select">
+            <option value="false" selected>- Дата:сегодня -</option>
+                {% for i in today|slice:'1:' %}
+                    <option value="{{ i|date:"d-m-Y" }}">{{ i|date:"d-m-Y" }}</option>
+                {% endfor %}
+        </select>
+    </div>
+    </div>
+</div>
+        </div>
+
+        <div class="row" style="justify-content: center">
+            <div class="col-sm-8 col-md-8 col-lg-8" style="text-align: left;">
+            <span style="font-size: 20px" id="date-film">{{ today|first|date:"d Fа Y"}}</span>
+            </div>
+        </div>
+
+
+<div class="row" style="justify-content: center;">
+    <div class="col-sm-6 col-md-6 col-lg-6" style="justify-content: center">
+        <table id='table1' style="width: 100%;  border: 3px solid yellow; margin: 0 auto">
+            <thead>
+                <tr style="text-align: center">
+                    <th style="width: 15%">Время</th>
+                    <th style="width: 45%">Фильм</th>
+                    <th style="width: 20%">Зал</th>
+                    <th style="width: 10%">Цена</th>
+                    <th style="width: 10%">Бронировать</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    <p id="no_films" style="display: none; font-size: 200%; text-align: center;">Нет доступных сеансов</p>
+    </div>
+    <div class="col-sm-2 col-md-2 col-lg-2"><img src="{% static 'content/dist/img/adversting.png' %}" alt="">
+    </div>
+</div>
+        <script src="{% static 'content/js/js_shedule.js' %}"></script>
+        <script>
+
+        function get_data_cinema() {
+            $.ajax({
+                url: '{% url 'content:shedule_cinema_up' %}',
+                type: 'get',
+                data: {
+                     'cinema_id': cinema_id.get('cinema_id'),
+                    'hall_id': hall_id.get('hall_id'),
+                    'film_id': film_id.get('film_id'),
+                    'date': date.get('date'),
+                    '2d': fd2.get('f2d'),
+                    '3d': fd3.get('f3d'),
+                    'imax': imax.get('imax')
+                },
+                success: (data) => {
+                    start()
+                    let film_data = data.session;
+                    console.log(film_data)
+                    $(function (){
+                        if (film_data.length === 0){
+                            $('#no_films').css('display', 'block')
+                        } else {
+                            $('#no_films').css('display', 'none')
+                        }
+                    })
+                    let tabel = '';
+                    let halls_data = data.halls
+                    console.log(halls_data)
+                    let halls = '';
+                    $(film_data).each(function(index, value) {
+                        tabel += "<tr class='text-center' style='border-top: 2px solid black'><td style='border: 1px solid black'>" + value.session_time + "</td><td class='filmstr' style='border: 1px solid black'><a style='color: black; font-size: 100%; text-decoration: underline' href='/film/" + value.film_id + "'>" + value.film_name + "</td><td style='border: 1px solid black'><a style='color: black;' href='/hall/" + value.hall_id + "'>" + value.hall_name + "</td style='border: 1px solid black'><td>" + value.price + "</td><td style='border: 1px solid black'><a href='/buy-tickets/"+ value.session_id +"'><img src='{% static 'content/dist/img/ticket.png' %}' style='width: 50%'></a></td></tr>"
+                    })
+                    $("#table1 tbody").append(tabel)
+
+                    $(halls_data).each(function(index, value) {
+                        halls += "<option class='hall' value=" + value.hall_id + ">"+ value.hall_name + "</option>"
+                    })
+                    $("#select-halls").append(halls)
+                },
+                error: (error) => {
+                    console.log("Errors= "+error);
+                }
+            })
+        }
+
+        function get_data() {
+            $.ajax({
+                url: '',
+                type: 'get',
+                data: {
+                    'cinema_id': cinema_id.get('cinema_id'),
+                    'hall_id': hall_id.get('hall_id'),
+                    'film_id': film_id.get('film_id'),
+                    'date': date.get('date'),
+                    '2d': fd2.get('f2d'),
+                    '3d': fd3.get('f3d'),
+                    'imax': imax.get('imax')
+                },
+                success: (data) => {
+                    start()
+                    let film_data = data.session;
+                    console.log(data)
+                    $(function () {
+                        if (film_data.length === 0) {
+                            $('#no_films').css('display', 'block')
+                        } else {
+                            $('#no_films').css('display', 'none')
+                        }
+                    })
+                    let table = '';
+                    $(film_data).each(function (index, value) {
+                        table += "<tr class='text-center' style='border-top: 2px solid black'><td style='border: 1px solid black'>" + value.session_time + "</td><td class='filmstr' style='border: 1px solid black'><a style='color: black; font-size: 100%; text-decoration: underline' href='/film/" + value.film_id + "'>" + value.film_name + "</td><td style='border: 1px solid black'><a style='color: black;' href='/hall/" + value.hall_id + "'>" + value.hall_name + "</td style='border: 1px solid black'><td>" + value.price + "</td><td style='border: 1px solid black'><a href='/buy-tickets/"+ value.session_id +"'><img src='{% static 'content/dist/img/ticket.png' %}' style='width: 50%'></a></td></tr>"
+                    })
+                    $("#table1 tbody").append(table)
+                },
+                error: (error) => {
+                    console.log(error);
+                }
+            })
+
+        }
+        setTimeout(get_data(), 100);
+
+        </script>
+
+        <script>
+    $('#sessions').on('click', function (){
+        localStorage.setItem('cinema', 'false')
+        localStorage.setItem('film_id', 'false')
+        localStorage.setItem('date', 'false')
+
+    })
+    $('#ses').on('click', function (){
+        localStorage.setItem('cinema', 'false')
+        localStorage.setItem('film_id', 'false')
+        localStorage.setItem('date', 'false')
+
+    })
+</script>
+    {% endblock %}

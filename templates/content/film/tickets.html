@@ -1,0 +1,317 @@
+{% extends 'content/layout/base.html' %}
+{% load static i18n %}
+{% block title %} Afisha {% endblock %}
+    {% block content %}
+
+<div>
+<div class="row">
+        <img src="{{ hall.banner.url }}" alt="" height="400px">
+    </div>
+<div class="container" style="margin-top: 30px">
+    <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-3" style="text-align: center">
+            <a href="{% url 'content:film' film.id %}"><img src="{{ film.logo.url }}" width="175px" height="250px" alt=""></a>
+            <a href="#"><img src="{% static 'content/dist/img/adversting.png' %}" width="100%" alt=""></a>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-9">
+            <div class="row">
+                <h4 style="background-color: #a73c48; color:white; width: max-content">{{ film.title }}</h4>
+            </div>
+            <div class="row">
+                <p style="font-size: 120%; font-family: "Courier New", Courier, monospace">{{ session.date|date:"d Fа Y" }}, {{ session.date.time }}, {{ hall.title }}</p>
+            </div>
+            <div class="row">
+                <div class="col-xl-3 col-lg-6" style="margin-bottom: 15px">
+                    <div class="row" style="text-align: center">
+                        <div class="col-9">
+                            <p>Цена в грн. : </p>
+                        </div>
+                        <div class="col-3">
+                            <p style="background: goldenrod; color: white; font-weight: bold; width: 50px" id="price">{{ session.price }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-6" style="margin-bottom: 15px">
+                    <div class="row" style="text-align: center">
+                        <div class="col-9">
+                            <p>Забронировано:</p>
+                        </div>
+                        <div class="col-3" style="padding-left: 20px">
+                            <p style="background: grey; color: white; font-weight: bold; width: 50px" id="reserve_count">0</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-12">
+                    <div class="row" style="text-align: center">
+                        <div class="col-4">
+                            <p>ВАШ ЗАКАЗ:</p>
+                        </div>
+                        <div class="col-8" style="border: 2px solid goldenrod">
+                            <div class="row">
+                                <div class="col-5">
+                                    <p>БИЛЕТОВ : <b id="tickets_count">0</b></p>
+                                </div>
+                                 <div class="col-7">
+                                     <p>СУММА : <b id="total_price">0</b>грн.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="position: relative; max-width: 854px; width: 100%; margin-left: auto; margin-right: auto">
+                <svg viewBox="0, 0, 854, 498" style="position: absolute; height: 100%; width: 100%" id="svg">
+                    <!--Row 1-->
+                    <rect class="unselected" x="295" y="120" width="30" height="30" row="1" place="1" id="sel"></rect>
+                    <rect class="unselected" x="327" y="120" width="30" height="30" row="1" place="2"></rect>
+                    <rect class="unselected" x="359" y="120" width="30" height="30" row="1" place="3"></rect>
+                    <rect class="unselected" x="391" y="120" width="30" height="30" row="1" place="4"></rect>
+                    <rect class="unselected" x="423" y="120" width="30" height="30" row="1" place="5"></rect>
+                    <rect class="unselected" x="455" y="120" width="30" height="30" row="1" place="6"></rect>
+                    <rect class="unselected" x="487" y="120" width="30" height="30" row="1" place="7"></rect>
+                    <rect class="unselected" x="519" y="120" width="30" height="30" row="1" place="8"></rect>
+                    <rect class="unselected" x="551" y="120" width="30" height="30" row="1" place="9"></rect>
+                    <rect class="unselected" x="583" y="120" width="30" height="30" row="1" place="10"></rect>
+                    <rect class="unselected" x="615" y="120" width="30" height="30" row="1" place="11"></rect>
+                    <rect class="unselected" x="647" y="120" width="30" height="30" row="1" place="12"></rect>
+                    <!--Row 2-->
+                    <rect class="unselected" x="263" y="152" width="30" height="30" row="2" place="1"></rect>
+                    <rect class="unselected" x="295" y="152" width="30" height="30" row="2" place="2"></rect>
+                    <rect class="unselected" x="327" y="152" width="30" height="30" row="2" place="3"></rect>
+                    <rect class="unselected" x="359" y="152" width="30" height="30" row="2" place="4"></rect>
+                    <rect class="unselected" x="391" y="152" width="30" height="30" row="2" place="5"></rect>
+                    <rect class="unselected" x="423" y="152" width="30" height="30" row="2" place="6"></rect>
+                    <rect class="unselected" x="455" y="152" width="30" height="30" row="2" place="7"></rect>
+                    <rect class="unselected" x="487" y="152" width="30" height="30" row="2" place="8"></rect>
+                    <rect class="unselected" x="519" y="152" width="30" height="30" row="2" place="9"></rect>
+                    <rect class="unselected" x="551" y="152" width="30" height="30" row="2" place="10"></rect>
+                    <rect class="unselected" x="583" y="152" width="30" height="30" row="2" place="11"></rect>
+                    <rect class="unselected" x="615" y="152" width="30" height="30" row="2" place="12"></rect>
+                    <rect class="unselected" x="647" y="152" width="30" height="30" row="2" place="13"></rect>
+                    <rect class="unselected" x="679" y="152" width="30" height="30" row="2" place="14"></rect>
+                    <!--Row 3-->
+                    <rect class="unselected" x="247" y="184" width="30" height="30" row="3" place="1"></rect>
+                    <rect class="unselected" x="279" y="184" width="30" height="30" row="3" place="2"></rect>
+                    <rect class="unselected" x="311" y="184" width="30" height="30" row="3" place="3"></rect>
+                    <rect class="unselected" x="343" y="184" width="30" height="30" row="3" place="4"></rect>
+                    <rect class="unselected" x="375" y="184" width="30" height="30" row="3" place="5"></rect>
+                    <rect class="unselected" x="407" y="184" width="30" height="30" row="3" place="6"></rect>
+                    <rect class="unselected" x="439" y="184" width="30" height="30" row="3" place="7"></rect>
+                    <rect class="unselected" x="471" y="184" width="30" height="30" row="3" place="8"></rect>
+                    <rect class="unselected" x="503" y="184" width="30" height="30" row="3" place="9"></rect>
+                    <rect class="unselected" x="535" y="184" width="30" height="30" row="3" place="10"></rect>
+                    <rect class="unselected" x="567" y="184" width="30" height="30" row="3" place="11"></rect>
+                    <rect class="unselected" x="599" y="184" width="30" height="30" row="3" place="12"></rect>
+                    <rect class="unselected" x="631" y="184" width="30" height="30" row="3" place="13"></rect>
+                    <rect class="unselected" x="663" y="184" width="30" height="30" row="3" place="14"></rect>
+                    <rect class="unselected" x="695" y="184" width="30" height="30" row="3" place="15"></rect>
+                    <!--Row 4-->
+                    <rect class="unselected" x="281" y="248" width="30" height="30" row="4" place="1"></rect>
+                    <rect class="unselected" x="313" y="248" width="30" height="30" row="4" place="2"></rect>
+                    <rect class="unselected" x="345" y="248" width="30" height="30" row="4" place="3"></rect>
+                    <rect class="unselected" x="377" y="248" width="30" height="30" row="4" place="4"></rect>
+                    <rect class="unselected" x="409" y="248" width="30" height="30" row="4" place="5"></rect>
+                    <rect class="unselected" x="441" y="248" width="30" height="30" row="4" place="6"></rect>
+                    <rect class="unselected" x="473" y="248" width="30" height="30" row="4" place="7"></rect>
+                    <rect class="unselected" x="505" y="248" width="30" height="30" row="4" place="8"></rect>
+                    <rect class="unselected" x="537" y="248" width="30" height="30" row="4" place="9"></rect>
+                    <rect class="unselected" x="569" y="248" width="30" height="30" row="4" place="10"></rect>
+                    <rect class="unselected" x="601" y="248" width="30" height="30" row="4" place="11"></rect>
+                    <rect class="unselected" x="633" y="248" width="30" height="30" row="4" place="12"></rect>
+                    <rect class="unselected" x="665" y="248" width="30" height="30" row="4" place="13"></rect>
+                    <!--Row 5-->
+                    <rect class="unselected" x="281" y="280" width="30" height="30" row="5" place="1"></rect>
+                    <rect class="unselected" x="313" y="280" width="30" height="30" row="5" place="2"></rect>
+                    <rect class="unselected" x="345" y="280" width="30" height="30" row="5" place="3"></rect>
+                    <rect class="unselected" x="377" y="280" width="30" height="30" row="5" place="4"></rect>
+                    <rect class="unselected" x="409" y="280" width="30" height="30" row="5" place="5"></rect>
+                    <rect class="unselected" x="441" y="280" width="30" height="30" row="5" place="6"></rect>
+                    <rect class="unselected" x="473" y="280" width="30" height="30" row="5" place="7"></rect>
+                    <rect class="unselected" x="505" y="280" width="30" height="30" row="5" place="8"></rect>
+                    <rect class="unselected" x="537" y="280" width="30" height="30" row="5" place="9"></rect>
+                    <rect class="unselected" x="569" y="280" width="30" height="30" row="5" place="10"></rect>
+                    <rect class="unselected" x="601" y="280" width="30" height="30" row="5" place="11"></rect>
+                    <rect class="unselected" x="633" y="280" width="30" height="30" row="5" place="12"></rect>
+                    <rect class="unselected" x="665" y="280" width="30" height="30" row="5" place="13"></rect>
+                     <!--Row 6-->
+                    <rect class="unselected" x="281" y="312" width="30" height="30" row="6" place="1"></rect>
+                    <rect class="unselected" x="313" y="312" width="30" height="30" row="6" place="2"></rect>
+                    <rect class="unselected" x="345" y="312" width="30" height="30" row="6" place="3"></rect>
+                    <rect class="unselected" x="377" y="312" width="30" height="30" row="6" place="4"></rect>
+                    <rect class="unselected" x="409" y="312" width="30" height="30" row="6" place="5"></rect>
+                    <rect class="unselected" x="441" y="312" width="30" height="30" row="6" place="6"></rect>
+                    <rect class="unselected" x="473" y="312" width="30" height="30" row="6" place="7"></rect>
+                    <rect class="unselected" x="505" y="312" width="30" height="30" row="6" place="8"></rect>
+                    <rect class="unselected" x="537" y="312" width="30" height="30" row="6" place="9"></rect>
+                    <rect class="unselected" x="569" y="312" width="30" height="30" row="6" place="10"></rect>
+                    <rect class="unselected" x="601" y="312" width="30" height="30" row="6" place="11"></rect>
+                    <rect class="unselected" x="633" y="312" width="30" height="30" row="6" place="12"></rect>
+                    <rect class="unselected" x="665" y="312" width="30" height="30" row="6" place="13"></rect>
+                     <!--Row 7-->
+                    <rect class="unselected" x="281" y="344" width="30" height="30" row="7" place="1"></rect>
+                    <rect class="unselected" x="313" y="344" width="30" height="30" row="7" place="2"></rect>
+                    <rect class="unselected" x="345" y="344" width="30" height="30" row="7" place="3"></rect>
+                    <rect class="unselected" x="377" y="344" width="30" height="30" row="7" place="4"></rect>
+                    <rect class="unselected" x="409" y="344" width="30" height="30" row="7" place="5"></rect>
+                    <rect class="unselected" x="441" y="344" width="30" height="30" row="7" place="6"></rect>
+                    <rect class="unselected" x="473" y="344" width="30" height="30" row="7" place="7"></rect>
+                    <rect class="unselected" x="505" y="344" width="30" height="30" row="7" place="8"></rect>
+                    <rect class="unselected" x="537" y="344" width="30" height="30" row="7" place="9"></rect>
+                    <rect class="unselected" x="569" y="344" width="30" height="30" row="7" place="10"></rect>
+                    <rect class="unselected" x="601" y="344" width="30" height="30" row="7" place="11"></rect>
+                    <rect class="unselected" x="633" y="344" width="30" height="30" row="7" place="12"></rect>
+                    <rect class="unselected" x="665" y="344" width="30" height="30" row="7" place="13"></rect>
+                     <!--Row 8-->
+                    <rect class="unselected" x="281" y="376" width="30" height="30" row="8" place="1"></rect>
+                    <rect class="unselected" x="313" y="376" width="30" height="30" row="8" place="2"></rect>
+                    <rect class="unselected" x="345" y="376" width="30" height="30" row="8" place="3"></rect>
+                    <rect class="unselected" x="377" y="376" width="30" height="30" row="8" place="4"></rect>
+                    <rect class="unselected" x="409" y="376" width="30" height="30" row="8" place="5"></rect>
+                    <rect class="unselected" x="441" y="376" width="30" height="30" row="8" place="6"></rect>
+                    <rect class="unselected" x="473" y="376" width="30" height="30" row="8" place="7"></rect>
+                    <rect class="unselected" x="505" y="376" width="30" height="30" row="8" place="8"></rect>
+                    <rect class="unselected" x="537" y="376" width="30" height="30" row="8" place="9"></rect>
+                    <rect class="unselected" x="569" y="376" width="30" height="30" row="8" place="10"></rect>
+                    <rect class="unselected" x="601" y="376" width="30" height="30" row="8" place="11"></rect>
+                    <rect class="unselected" x="633" y="376" width="30" height="30" row="8" place="12"></rect>
+                    <rect class="unselected" x="665" y="376" width="30" height="30" row="8" place="13"></rect>
+                     <!--Row 9-->
+                    <rect class="unselected" x="281" y="408" width="30" height="30" row="9" place="1"></rect>
+                    <rect class="unselected" x="313" y="408" width="30" height="30" row="9" place="2"></rect>
+                    <rect class="unselected" x="345" y="408" width="30" height="30" row="9" place="3"></rect>
+                    <rect class="unselected" x="377" y="408" width="30" height="30" row="9" place="4"></rect>
+                    <rect class="unselected" x="409" y="408" width="30" height="30" row="9" place="5"></rect>
+                    <rect class="unselected" x="441" y="408" width="30" height="30" row="9" place="6"></rect>
+                    <rect class="unselected" x="473" y="408" width="30" height="30" row="9" place="7"></rect>
+                    <rect class="unselected" x="505" y="408" width="30" height="30" row="9" place="8"></rect>
+                    <rect class="unselected" x="537" y="408" width="30" height="30" row="9" place="9"></rect>
+                    <rect class="unselected" x="569" y="408" width="30" height="30" row="9" place="10"></rect>
+                    <rect class="unselected" x="601" y="408" width="30" height="30" row="9" place="11"></rect>
+                    <rect class="unselected" x="633" y="408" width="30" height="30" row="9" place="12"></rect>
+                    <rect class="unselected" x="665" y="408" width="30" height="30" row="9" place="13"></rect>
+                    <!--Row 10-->
+                    <rect class="unselected" x="170" y="440" width="30" height="30" row="10" place="1"></rect>
+                    <rect class="unselected" x="202" y="440" width="30" height="30" row="10" place="2"></rect>
+                    <rect class="unselected" x="234" y="440" width="30" height="30" row="10" place="3"></rect>
+                    <rect class="unselected" x="266" y="440" width="30" height="30" row="10" place="4"></rect>
+                    <rect class="unselected" x="298" y="440" width="30" height="30" row="10" place="5"></rect>
+                    <rect class="unselected" x="330" y="440" width="30" height="30" row="10" place="6"></rect>
+                    <rect class="unselected" x="362" y="440" width="30" height="30" row="10" place="7"></rect>
+                    <rect class="unselected" x="394" y="440" width="30" height="30" row="10" place="8"></rect>
+                    <rect class="unselected" x="426" y="440" width="30" height="30" row="10" place="9"></rect>
+                    <rect class="unselected" x="458" y="440" width="30" height="30" row="10" place="10"></rect>
+                    <rect class="unselected" x="490" y="440" width="30" height="30" row="10" place="11"></rect>
+                    <rect class="unselected" x="522" y="440" width="30" height="30" row="10" place="12"></rect>
+                    <rect class="unselected" x="554" y="440" width="30" height="30" row="10" place="13"></rect>
+                    <rect class="unselected" x="586" y="440" width="30" height="30" row="10" place="14"></rect>
+                    <rect class="unselected" x="618" y="440" width="30" height="30" row="10" place="15"></rect>
+                    <rect class="unselected" x="650" y="440" width="30" height="30" row="10" place="16"></rect>
+                    <rect class="unselected" x="682" y="440" width="30" height="30" row="10" place="17"></rect>
+                    <rect class="unselected" x="714" y="440" width="30" height="30" row="10" place="18"></rect>
+                    <rect class="unselected" x="746" y="440" width="30" height="30" row="10" place="19"></rect>
+                    <rect class="unselected" x="778" y="440" width="30" height="30" row="10" place="20"></rect>
+                </svg>
+                <img src="{{ hall.map.url }}" style="max-width: 854px; width: 100%">
+            </div>
+            <div class="row">
+                <p>Стоимость услуги бронирования билета - 3 грн. за каждое место</p>
+                <p>ЗАБРОНИРОВАННЫЕ БИЛЕТЫ НУЖНО ВЫКУПИТЬ В КАССЕ КИНОТЕАТРА НЕ ПОЗДНЕЕ ЧЕМ ЗА ПОЛ ЧАСА ДО НАЧАЛА СЕАНСА.</p>
+            </div>
+            {% if user.is_authenticated %}
+            <div class="row" style="justify-content: center">
+{#                <form action="">#}
+                    {% csrf_token %}
+                <button type="submit" class="btn btn-outline-success" style="width: 200px; margin: 0 20px">Забронировать</button>
+{#                <a href="" class="btn btn-outline-success" style="width: 200px; margin: 0 20px">Забронировать</a>#}
+                <button type="submit" class="btn btn-success" onclick="buy_data()" style="width: 200px; margin: 0 20px">Купить</button>
+
+{#                <a href="#" class="btn btn-success" onclick="post_data()" style="width: 200px; margin: 0 20px">Купить</a>#}
+{#                </form>#}
+            </div>
+                {% else %}
+                <div style="margin-bottom: 15px; text-align: center">
+                <p style="font-size: 150%">Бронирование доступно только авторизированым пользователям</p>
+            </div>
+            {% endif %}
+        </div>
+
+    </div>
+
+</div>
+</div>
+<script>
+                let session = {{ session.id }}
+jQuery(document).ready(function() {
+    get_data_tickets()
+})
+        {#setTimeout(get_data_tickets(), 10);#}
+
+
+{#setTimeout(get_data, 1000);#}
+
+    {#var id = $('#id_place').val('href');#}
+    {#var js = $.parseJSON(id)#}
+    {#$(#id_place).on('click', function () {#}
+    {#console.log(id);#}
+    {#setTimeout(Hey, 1000)#}
+</script>
+        <script>
+        function buy_data() {
+    buy_place();
+    var csrf = $("input[name=csrfmiddlewaretoken]").val();
+    $.ajax({
+        url: '{% url 'content:bought-tickets' %}',
+        type: 'post',
+        data: {
+            'session': session,
+            'place': place,
+            csrfmiddlewaretoken: csrf,
+        },
+        success: (data) => {
+            place = [];
+            get_data_tickets();
+            document.getElementById("tickets_count").innerHTML ='0';
+            document.getElementById("total_price").innerHTML ='0';
+            $('html, body').animate({scrollTop: 500}, 500);
+
+        }})
+
+
+}
+        </script>
+        <script src="{% static 'content/js/js_tickets.js' %}">
+
+    {#$('#ses').on('click', function (){#}
+    {#    localStorage.setItem('cinema', 'false')#}
+    {#    localStorage.setItem('film_id', 'false')#}
+    {#    localStorage.setItem('date', 'false')#}
+{##}
+{#    })#}
+</script>
+        <style>
+    .unselected{
+        opacity: 0;
+    }
+    .selected:hover{
+        cursor: pointer;
+    }
+    .unselected:hover{
+        cursor: pointer;
+    }
+    .selected{
+        fill: grey;
+        opacity: 0.6;
+    }
+    .reserve{
+        fill: grey;
+        opacity: 0.9;
+
+    }
+    .reserve:hover{
+        cursor: no-drop;
+
+    }
+
+</style>
+
+{% endblock %}

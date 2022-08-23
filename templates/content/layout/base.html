@@ -1,0 +1,288 @@
+{% load static %}
+{% load static i18n %}
+
+{% load static %}
+{% load static i18n %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<link rel="icon" href="data:;base64,=">
+
+    <meta charset="UTF-8">
+    <title>{% block title %}Главная{% endblock %}</title>
+<script src="/static/cinema/plugins/jquery/jquery.min.js"></script>
+<script src="/static/cinema/plugins/jquery-ui/jquery-ui.min.js"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<link type="text/css" href="{% static 'content/css/content.css' %}" rel="stylesheet">
+
+
+ <!-- Google Font: Source Sans Pro -->
+  <link  type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link type="text/css" rel="stylesheet" href="/static/cinema/plugins/fontawesome-free/css/all.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="/static/cinema/dist/css/adminlte.min.css">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="/static/cinema/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <link rel="stylesheet" href="/static/cinema/style/news_or_sale_status.css">
+
+</head>
+{% if backgroundbanner.type == 'Фото на фоне' %}
+<body style="background-image: url('{{ backgroundbanner.image.url }}'); background-size: 100% 100%; background-attachment: fixed; overflow-x: hidden">
+{% else %}
+    <body>
+{% endif %}
+
+{% block action %}
+{% endblock %}
+<div class="wrapper">
+<!-- header -->
+
+<header style="margin-top: 20px">
+    <div class="col-sm-10" style="margin-left: auto; margin-right: auto">
+    <div class="row" style="justify-content: center" >
+        <div class="col-sm-12 col-md-2 col-lg-2" style="text-align: center">
+            <a href="{% url 'content:main' %}"><img src="/static/cinema/dist/img/CinemaCMSLogo.png" alt="" width="100px" height="100px"></a>
+        </div>
+        <div class="col-sm-8">
+            <div class="row" style="justify-content: center; align-items: center">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-2" style="text-align: center">
+                 <input type="search" class="form-control form-control-lg" placeholder="Поиск" height="25px" style="width: 100%; height: 50px">
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-3" style="justify-content: center; text-align: center">
+                    <div class="row" style="justify-content: center">
+                        {% if not user.is_authenticated %}
+                        <div class="col-xs-6 col-sm-6 col-md-4 col-lg-6">
+                            <a href="{% url 'users:login' %}" class="btn btn-success">Login</a>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-4 col-lg-6">
+                            <a href="{% url 'users:register' %}" class="btn btn-outline-primary">Register</a>
+                        </div>
+                            {% else %}
+                             <div class="col-xs-6 col-sm-12 col-md-4 col-lg-6">
+                            <a href="{% url 'users:login' %}" class="btn btn-success">{% trans "Профиль" %}</a>
+                        </div>
+                        <div class="col-sm-12 col-md-4 col-lg-6">
+                            <a href="{% url 'users:register' %}" class="btn btn-outline-danger">{% trans "Выйти" %}</a>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-10 col-lg-4" >
+                    <div class="row" style="justify-content: center; display: flex; flex-wrap: nowrap; padding: 20px;  width: auto">
+                        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" style="width: auto">
+                    <a href="#">
+                    <img src="/static/content/dist/img/facebook.png" alt="" width="40px" height="40px">
+                </a>
+                            </div>
+                                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" style="justify-content: center; text-align: center;  width: auto">
+
+                <a href="#">
+                    <img src="/static/content/dist/img/vk.png" alt="" width="40px" height="40px"width="40px" height="40px">
+            </a>
+                                                </div>
+                                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" style="justify-content: center; text-align: center;width: auto">
+                <a href="#">
+                    <img src="/static/content/dist/img/ok.png" alt="" width="40px" height="40px"width="40px" height="40px">
+                </a>
+                            </div>
+                                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" style="justify-content: center; text-align: center;width: auto">
+                <a href="#">
+                    <img src="/static/content/dist/img/telegram.png" alt="" width="40px" height="40px">
+                </a>
+                        </div>
+                                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" style="justify-content: center; text-align: center;width: auto">
+                <a href="#">
+                    <img src="/static/content/dist/img/insta.png" alt="" width="40px" height="40px">
+                </a>
+                    </div>
+                                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" style="justify-content: center; text-align: center; width: auto;">
+                <a href="#">
+                    <img src="/static/content/dist/img/viber.png" alt="" width="40px" height="40px">
+                </a>
+                </div>
+                        </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-12 col-lg-3" style="align-items: center">
+                    <h4 style="text-align: center">048-777-77-77 </h4>
+                        <h4 style="text-align: center">097-777-77-77</h4>
+                </div>
+            </div>
+            <div class="row" style="display: flex">
+                <div class="col-lg-12 col-md-12 col-sm-6">
+                <nav class="navbar navbar-expand-lg ">
+  <div class="container">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <i class="fas fa-bars">Menu</i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown" style="justify-content: left;">
+      <ul class="navbar-nav" style="width: 100%; justify-content: space-between; border: 1px solid black; border-radius: 5px">
+        <li class="nav-item">
+          <a class="nav-link active"  style="color: black" aria-current="page" href="{% url 'content:afisha' %}">{% trans "Афиша" %}</a>
+        </li>
+        <li class="nav-item" >
+          <a class="nav-link" id="sessions" style="color: black" href="{% url 'content:shedule' %}">{% trans "Расписание" %}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" style="color: black" href="{% url 'content:soon' %}">{% trans "Скоро" %}</a>
+        </li>
+          <li class="nav-item">
+          <a class="nav-link" style="color: black" href="{% url 'content:cinemas' %}">{% trans "Кинотеатры" %}</a>
+        </li>
+          <li class="nav-item">
+          <a class="nav-link" style="color: black" href="{% url 'content:sales' %}">{% trans "Акции" %}</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle"  style="color: black" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            О кинотеатре
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'content:news' %}">{% trans 'Новости' %}</a></li>
+            <li><a class="dropdown-item" href="{% url 'content:adv' %}">{% trans 'Реклама' %}</a></li>
+            <li><a class="dropdown-item" href="{% url 'content:coffee' %}">{% trans "Кафе" %}</a>
+            <li><a class="dropdown-item" href="{% url 'content:vip' %}">{% trans "Vip-зал" %}</a>
+              <li><a class="dropdown-item" href="{% url 'content:mob' %}">{% trans "Мобильное приложение" %}</a></li>
+              <li><a class="dropdown-item" href="{% url 'content:contacts' %}">{% trans "Контакты" %}</a></li>
+
+
+          </ul>
+        </li>
+          {% if user.is_staff or user.is_superuser %}
+          <li class="nav-item">
+          <a class="nav-link" style="color: black" href="{% url 'cinema:statistics' %}">ADMIN</a>
+        </li>
+          {% endif %}
+      </ul>
+        <form action="{% url 'set_language' %}" method="post" style="display: flex; padding-left: 5px">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ redirect_to }}">
+            <select name="language">
+                {% get_current_language as LANGUAGE_CODE %}
+                {% get_available_languages as LANGUAGES %}
+                {% get_language_info_list for LANGUAGES as languages %}
+                {% for language in languages %}
+                <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %} selected {% endif %}>
+                    {{ language.name_local }} ({{ language.code }})
+                </option>
+                {% endfor %}
+            </select>
+
+            <input type="submit" value="Go">
+        </form>
+    </div>
+  </div>
+</nav>
+            </div>
+        </div>
+
+</div>
+        </div>
+        </div>
+</header>
+
+<!-- END header -->
+{#<div class="container">#}
+    {% block content %}
+    {% endblock %}
+{#</div>#}
+<footer>
+<div class="col-8" style="height: 300px; margin: auto">
+    <hr size="5" color="black" style="margin-bottom: 50px">
+    <div class="row" style="justify-content: center">
+        <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4" style="text-align: center">
+            <h6>{% trans "Мобильные приложения" %}</h6>
+            <div class="row" style="justify-content: center">
+                <div class="col-4"><a href=""><img src="/static/content/dist/img/android.png" width="100%" alt=""></a></div>
+                <div class="col-4"><a href=""><img src="/static/content/dist/img/apple.png" width="100%" alt=""></a></div>
+            </div>
+            </div>
+        <div class="col-xs-12 col-sm-12 col-md-8 col-lg-5">
+            <div class="row">
+            <div class="col-6">
+                <ul style="list-style: none">
+                    <li style="font-size: 22px"><a href="" style="color:black; text-decoration: none">{% trans "Афиша" %}</a></li>
+                    <li id="ses"><a href=""style="color:black; text-decoration: none">{% trans "Расписание" %}</a></li>
+                    <li><a href=""style="color:black; text-decoration: none">{% trans "Скоро в проекате" %}</a></li>
+                    <li><a href=""style="color:black; text-decoration: none">{% trans "Кинотеатры" %}</a></li>
+                    <li><a href=""style="color:black; text-decoration: none">{% trans "Акции" %}</a></li>
+                </ul>
+            </div>
+            <div class="col-6">
+                <ul style="list-style: none">
+                    <li style="font-size: 22px"><a href="" style="color:black; text-decoration: none">{% trans "О Кинотеатре" %}</a></li>
+                    <li><a href=""style="color:black; text-decoration: none">{% trans "Новости" %}</a></li>
+                    <li><a href=""style="color:black; text-decoration: none">{% trans "Реклама" %}</a></li>
+                    <li><a href=""style="color:black; text-decoration: none">{% trans "Кафе бар" %}</a></li>
+                    <li><a href=""style="color:black; text-decoration: none">{% trans "Контакты" %}</a></li>
+                </ul>
+            </div>
+        </div></div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-3">
+            <div class="row">
+                <div class="col-3"><a href=""><img src="/static/content/dist/img/vk.png" width="40px" height="40px" alt=""></a></div>
+                <div class="col-3"><a href=""><img src="/static/content/dist/img/facebook.png" width="40px" height="40px" alt=""></a></div>
+                <div class="col-3"><a href=""><img src="/static/content/dist/img/ok.png" width="40px" height="40px" alt=""></a></div>
+                <div class="col-3"><a href=""><img src="/static/content/dist/img/telegram.png" width="40px" height="40px" alt=""></a></div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row" style="text-align: center">
+        <p>@KinoCMS 2022. All rights reserved</p>
+    </div>
+</div>
+
+</footer>
+</div>
+    <!-- jQuery -->
+<!-- jQuery UI 1.11.4 -->
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+  $.widget.bridge('uibutton', $.ui.button)
+</script>
+<!-- Bootstrap 4 -->
+<script src="/static/cinema/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+{#    <script src="/static/cinema/dist/css/"></script>#}
+<!-- overlayScrollbars -->
+<script src="/static/cinema/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+<!-- AdminLTE App -->
+<script src="/static/cinema/dist/js/adminlte.js"></script>
+{#<!-- AdminLTE for demo purposes -->#}
+<script src="/static/cinema/dist/js/adminlte.min.js"></script>
+<script src="/static/cinema/plugins/sweetalert2/sweetalert2.min.js"></script>
+    <script src="/static/cinema/plugins/toastr/toastr.min.js"></script>
+    <script src="/static/cinema/script_creating/news_or_sale_status.js"></script>
+<script src="/static/cinema/dist/js/adminlte.js"></script>
+<script>
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+{% block script %}
+     <script>
+    $('#sessions').on('click', function (){
+        localStorage.setItem('cinema', 'false')
+        localStorage.setItem('film_id', 'false')
+        localStorage.setItem('date', 'false')
+
+    })
+    $('#ses').on('click', function (){
+        localStorage.setItem('cinema', 'false')
+        localStorage.setItem('film_id', 'false')
+        localStorage.setItem('date', 'false')
+
+    })
+</script>
+    <script>
+    $('.sessions').on('click', function() {
+    localStorage.setItem('cinema', 'false')
+    localStorage.setItem('film', $(this).val())
+})
+</script>
+
+
+{% endblock %}
+</body>
+</html>

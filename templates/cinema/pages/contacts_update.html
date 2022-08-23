@@ -1,0 +1,161 @@
+{% extends 'cinema/layout/base.html' %}
+{% load static %}
+{% block title %}Update Cinema{% endblock %}
+{% block content %}
+
+    <form id="form-container" enctype="multipart/form-data" method="post" style="padding-top: 70px; margin: 0 70px 0 70px; max-height: content-box">
+
+        {% csrf_token %}
+
+    <!-- FORMSET CONTACTS-->
+               <div id="contacts" style="max-width: 100%; margin-bottom: 30px" >
+                   <div id="form_set">
+                   {{ formset.management_form }}
+                               {% for form in formset %}
+
+                           <div id="{{ form.prefix }}-form" style="border: 2px solid black; border-radius: 20px; padding: 30px; margin-bottom: 40px">
+                            {% for hidden in form.hidden_fields %}
+                                        {{ hidden }}
+                                        {% endfor %}
+                        <div class="col-sm-12" style="text-align: right; padding-right: 20px">
+                            <label class="checkbox-ios">
+                                {{ form.status }}
+                                <span class="checkbox-ios-switch"></span>
+                            </label>
+                        </div>
+                        <div class="row" style="margin-bottom: 40px">
+
+                            <div class="col-2">
+                                <label for="id_cinema_name">Название кинотеатра</label>
+                            </div>
+                            <div class="col-sm-6">
+                                    {{ form.cinema_name }}
+                            </div>
+                        </div>
+                        <div class="row" style="margin-bottom: 40px">
+
+                            <div class="col-2">
+                                <label for="id_address">Адрес</label>
+                            </div>
+                            <div class="col-sm-6">
+                                {{ form.address }}
+                            </div>
+                        </div>
+                        <div class="row" style="margin-bottom: 40px">
+
+                            <div class="col-sm-2">
+                                <label for="id_coordinates">Координаты для карты</label>
+                            </div>
+                            <div class="col-sm-6">
+                                {{ form.coordinates }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2" style="display: flex; align-items: center">
+                                <b>Лого</b>
+                            </div>
+                            <div class="col-sm-3" style="padding-right: 300px">
+                                <img src="{{ form.instance.logo.url }}" id="{{ form.prefix }}-logo" height="200" width="300">
+                            </div>
+                            <div class="col-sm-2" style="display: flex; align-items: center; width: 150px; padding-right: 150px">
+                                <button id="{{ form.prefix }}" type="button" onchange="preview_logo(this.id)" class="btn btn-outline-success btn-file" style="display: block; min-width: 150px">
+                                    Загрузить
+                                    <input type="file" name="{{ form.prefix }}-logo" value="{{ form.instance.logo.value }}" accept="image/*" id="id_{{ form.prefix }}-logo">
+                                </button>
+                            </div>
+                            <div class="col-sm-2" style="display: flex; align-items: center; width: 150px;">
+                                <button type="button" id="{{ form.prefix }}" onclick="delete_logo(this.id)" class="btn btn-outline-danger btn-file" style="display: block; min-width: 150px">Удалить</button>
+                            </div>
+                        </div>
+                    </div>
+                                      {% endfor %}
+
+                </div>
+<!-- EMPTY FORM-->
+
+               <div id="empty_form" style="display: none">
+                    <div id="form-__prefix__-form" style="border: 2px solid black; border-radius: 20px; padding: 30px; margin-bottom: 40px">
+
+                        <input type="hidden" name="form-__prefix__-id" id="id_form-__prefix__-id">
+                        <div class="col-sm-12" style="text-align: right; padding-right: 20px">
+                            <label class="checkbox-ios">
+                                <input type="checkbox" name="form-__prefix__-status" id="id_form-__prefix__-status" checked="">
+                                <span class="checkbox-ios-switch"></span>
+                            </label>
+                        </div>
+                        <div class="row" style="margin-bottom: 40px">
+
+                            <div class="col-2">
+                                <label for="id_cinema_name">Название кинотеатра</label>
+                            </div>
+                            <div class="col-sm-6">
+                                <span><input type="text" name="form-__prefix__-cinema_name" class="form-control" placeholder="Название кинотеатра" maxlength="30" id="id_form-__prefix__-name"></span>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-bottom: 40px">
+
+                            <div class="col-2">
+                                <label for="id_address">Адрес</label>
+                            </div>
+                            <div class="col-sm-6">
+                                <span><textarea name="form-__prefix__-address" cols="40" rows="4" class="form-control" placeholder="Введите адрес кинотеатра" id="id_form-__prefix__-address"></textarea></span>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-bottom: 40px">
+
+                            <div class="col-sm-2">
+                                <label for="id_coordinates">Координаты для карты</label>
+                            </div>
+                            <div class="col-sm-6">
+                                <span><input type="text" name="form-__prefix__-coordinates" placeholder="Координаты для карты" class="form-control" maxlength="512" id="id_form-__prefix__-coordinates"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2" style="display: flex; align-items: center">
+                                <b>Лого</b>
+                            </div>
+                            <div class="col-sm-3" style="padding-right: 300px">
+                                <img src="{% static 'cinema/dist/img/preview_upload.png' %}" id="form-__prefix__-logo" height="200" width="300">
+                            </div>
+                            <div class="col-sm-2" style="display: flex; align-items: center; width: 150px; padding-right: 150px">
+                                <button id="form-__prefix__" type="button" onchange="preview_logo(this.id)" class="btn btn-outline-success btn-file" style="display: block; min-width: 150px">
+                                    Загрузить <input type="file" name="form-__prefix__-logo" accept="image/*" id="id_form-__prefix__-logo">
+                                </button>
+                            </div>
+                            <div class="col-sm-2" style="display: flex; align-items: center; width: 150px;">
+                                <button type="button" id="form-__prefix__" onclick="delete_logo(this.id)" class="btn btn-outline-danger btn-file" style="display: block; min-width: 150px">Удалить</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+               <div class="row" style="padding-bottom: 50px; justify-content: center">
+                           <button type="button" class="add-more-img btn btn-block btn-outline-primary" id="add_more" style="width: 200px; min-width: 100px; display: block">Добавить кинотеатр</button>
+</div>
+<!-- SEO TEXT -->
+
+{% for s in seo %}
+            {{ s.errors }}
+            <div class="row" style="max-width: 100%; margin-bottom: 30px" >
+                <div class="col-2">{{ s.label_tag }}</div>
+                <div class="col-6">{{ s }}</div>
+            </div>
+        {% endfor %}
+               <div class="row" style="justify-content: center;width: 100%; padding-top: 0; padding-bottom: 50px;">
+
+            <div class="col-sm-3" style="justify-content: center"><input type="submit" id="submit-btn" value="Изменить кинотеатр" class="btn btn-primary"></div>
+            <div class="col-sm-2" style="justify-content: center"><a href="{% url 'cinema:pages' %}" role="button" class="btn btn-secondary" style="justify-content: center" >Отмена</a></div>
+            </div>
+               </div>
+    </form>
+<!-- END SEO TEXT -->
+
+
+
+
+<script src="{% static 'cinema/plugins/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'cinema/script_creating/contacts_preview.js' %}"></script>
+        <script src="{% static 'cinema/script_creating/formset_gallery.js' %}"></script>
+{#</div>#}
+{% endblock %}
+

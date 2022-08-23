@@ -1,0 +1,112 @@
+{% extends 'cinema/layout/base.html' %}
+{% load static %}
+{% block title %}Пользователи{% endblock %}
+{% block content %}
+
+    <div class="row" style="text-align: center; padding-top: 50px">
+    <h3>Пользователи</h3>
+    </div>
+<div class="card-body" style="width: 80%; margin-left: auto; margin-right: auto;">
+                <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                    <div class="row"><div class="col-sm-12 col-md-6"></div>
+                        <div class="col-sm-12 col-md-6"></div>
+                    </div>
+                    <table id="users" class="table table-bordered table-hover dataTable dtr-inline" aria-describedby="example2_info">
+                  <thead>
+                  <tr>
+                      <th class="sorting sorting_asc" tabindex="0" aria-controls="users" rowspan="1" colspan="1" aria-label="ID: activate to sort column descending" aria-sort="ascending">
+                          ID
+                      </th>
+                      <th class="sorting" tabindex="0" aria-controls="users" rowspan="1" colspan="1" aria-label="Дата регистрации: activate to sort column ascending">
+                          Дата регистрации
+                      </th>
+                      <th class="sorting" tabindex="0" aria-controls="users" rowspan="1" colspan="1" aria-label="День рождения(s): activate to sort column ascending">
+                          День рождения(s)
+                      </th>
+                      <th class="sorting" tabindex="0" aria-controls="users" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">
+                          Email
+                      </th>
+                      <th class="sorting" tabindex="0" aria-controls="users" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">
+                          Телефон
+                      </th>
+                      <th class="sorting" tabindex="0" aria-controls="users" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">
+                          ФИО
+                      </th>
+                      <th class="sorting" tabindex="0" aria-controls="users" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">
+                          Псевдоним
+                      </th>
+                      <th class="sorting" tabindex="0" aria-controls="users" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">
+                          Город
+                      </th>
+                      <th class="sorting" tabindex="0" aria-controls="users" rowspan="1" colspan="1" aria-label="Редактировать: activate to sort column ascending">
+                          Изменить
+                      </th>
+                      <th class="sorting" tabindex="0" aria-controls="users" rowspan="1" colspan="1" aria-label="Удалить: activate to sort column ascending">
+                          Удалить
+                      </th>
+                  </tr>
+                  </thead>
+                  <tbody>
+
+
+                {% for u in users %}
+                    {% if not u.is_staff and not u.is_superuser %}
+                  <tr class="odd">
+{#                    <td class="dtr-control sorting_1" tabindex="0">Gecko</td>#}
+                    <td>{{ u.id }}</td>
+                    <td>{{ u.date_joined }}+</td>
+                    <td> {{ u.birthday }} </td>
+                    <td> {{ u.email }}</td>
+                    <td> {{ u.phone }}</td>
+                    <td> {{ u.first_name }} {{ u.last_name }}</td>
+                    <td> {{ u.username }}</td>
+                    <td> {{ u.city }}</td>
+                    <td style="text-align: center">
+                         <a href="{% url 'cinema:user_change' u.id %}">
+                        <button type="button" class="btn btn-outline-info">
+                              <img src="{% static 'cinema/dist/img/editpencil1.png' %}" alt="edit user" width="25px" height="25px">
+                </button>
+                          </a>
+                    </td>
+                  <td style="text-align: center">
+                      <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                                data-bs-target="#deleteModal100-{{ u.id }}">
+                              <img src="{% static 'cinema/dist/img/deletebucket.png' %}" alt="delete user" width="25px" height="25px">
+                              </button>
+                  </td>
+                  </tr>
+                    {% endif %}
+                  {% endfor %}
+                  </tbody>
+                </table>
+                        </div>
+                    </div>
+                </div>
+</div>
+
+    <!-- MODAL DELETE HALL-->
+{% for u in users %}
+        <div class="modal fade" id="deleteModal100-{{ u.id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModalLabel" style="display: none;" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                          <div class="modal-header bg-dark">
+                            <h5 class="modal-title" id="deleteModal1Label-{{ u.id }}">Подтвердите удаление страницы</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <form method="post" action="{% url 'cinema:user_delete' u.id %}">
+                              {% csrf_token %}
+                              <div class="modal-body">
+                                  <b>{{ u.username }}</b> будет удаленa безвозвратно. Подтвердите свои действия!
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                                <button type="submit" class="btn btn-danger">Удалить</button>
+                              </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+        <!-- ENDMODAL DELETE NEW-->
+    {% endfor %}
+
+{% endblock %}

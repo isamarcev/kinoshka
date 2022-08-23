@@ -1,0 +1,35 @@
+{% extends 'content/layout/base.html' %}
+{% load static i18n %}
+{% block title %} Afisha {% endblock %}
+    {% block content %}
+<div class="row" style="justify-content: center; padding-top: 50px">
+
+    <div class="col-sm-2 col-md-4 col-lg-2" style="margin-bottom: 10px;">
+        <div class="row" style="border: 1px solid black; background: #b0b1b1; width: 80%; border-radius: 0 10px 10px 0; padding: 10px 0"><a
+                href="#" style="text-decoration: none;  color: black;"><span>Афиша</span></a></div>
+        <div class="row" style="border: 1px solid black; border-radius: 0 10px 10px 0; width: 80%; padding: 10px 0"><a
+                href="{% url 'content:soon' %}" style="text-decoration: none; color: black;" ><span style="">Скоро</span></a></div>
+        <img src="{% static 'content/dist/img/adversting.png' %}" width=80% alt="">
+    </div>
+
+
+    <div class="col-sm-8 col-md-8 col-lg-8" style="background: #1c1e61">
+
+    <!-- MOVIE TODAY -->
+{#        <h3 style="text-align: center; padding: 25px 0;"><b>Смотрите сегодня,</b> {{ today }}</h3>#}
+        <div class="row">
+            {% for film in sessions %}
+                    <div class="col-xs-8 col-sm-4 col-md-4 col-lg-4" style="text-align: center; padding: 10px 0">
+                        <a href="{% url 'content:film' film.id %}">
+                            <p style="color: white">{{ film.date }}</p>
+                            <img src="{{ film.film.logo.url }}" width="150px" height="200px" alt="">
+                            <h6 style="color:white">{{ film.film.title }}</h6>
+                        </a>
+                        <a href="{% url 'content:buy-tickets' film.id %}" class="btn btn-success">Купить билет</a>
+                    </div>
+            {% endfor %}
+        </div>
+
+    </div>
+</div>
+    {% endblock %}

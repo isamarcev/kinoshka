@@ -1,0 +1,21 @@
+ul li:hover{
+    background-color: whitesmoke;
+
+    /*border: 1px solid black;*/
+    /*height:;*/
+    border-radius: 5px;
+    outline: 1px solid black; /* Пунктирная рамка */
+    /*outline-offset: -10px; !* Выводим рамку внутри элемента *!*/
+}
+li a:hover{
+    color: grey;
+}
+
+div .hall_list:hover{
+    background-color: grey;
+
+}
+
+div .hall_list:hover .trees {
+    display: block;
+}

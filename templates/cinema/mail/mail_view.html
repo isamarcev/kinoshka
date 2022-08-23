@@ -1,0 +1,264 @@
+{% extends 'cinema/layout/base.html' %}
+{% load static %}
+{% block title %}Mailing{% endblock %}
+{% block content %}
+
+<div class="row" style="border: 1px solid black; border-radius: 20px; padding-top: 10px; margin: 30px 100px 0 100px">
+    <h2 style="text-align: center">E-mail</h2>
+
+        <form action="{% url 'cinema:send_mail' %}" id="form" method="post" style="padding: 0 100px">
+                        {% csrf_token %}
+            <div class="row" style="align-items: center">
+
+    <div class="col-3" style="align-items: center"><p style="margin: auto 0"><span>Выбрать кому слать:</span></p></div>
+    <div class="col-sm-3" style="display: inline-flex; align-items: center">
+        <input type="radio" name="user_select_all" class="user_select" id="user_select_all">
+        <span style="padding: 0 5px">Все пользователи на почте</span>
+    </div>
+        <div class="col-sm-6" style="display: flex; align-items: center">
+            <input type="radio" name="user_select" id="user_select" class="user_select">
+            <span style="padding: 0 5px">Выборочно</span><button type="button" id="btn_select" class="btn btn-outline-info" data-bs-toggle="modal"
+                                data-bs-target="#deleteModal100-choose_users">Выбрать пользователей
+                              </button>
+        </div>
+            </div>
+            <div class="row" style="padding-top: 50px">
+                <div class="col-sm-6" style="padding-right: 20px">
+                    <div class="row" style="display: flex; align-items: center; margin: 10px 0">
+                            <div class="col-sm-6" style="align-items: center; padding: 0">
+                                <p style="margin: auto 0">Выбрать HTML документы</p>
+                            </div>
+                            <div class="col-sm-6">
+                                <button type="button" onchange="showpreviewfile(event)" class="btn btn-outline-success btn-file"
+                                    style="display: block; min-width: 200px; max-width: 300px; border-radius: 10px">
+                                    Загрузить <input type="file" name="file" onchange="add_template()" id="id_file">
+                                </button>
+                            </div>
+                    </div>
+                    <div class="row" style="align-items: center; display: flex; margin: 10px 0">
+                        <div class="col-sm-6" style="padding: 0">
+                            <span >Загружен файл:</span>
+                        </div>
+                        <div class="col-sm-6">
+                            <p id="loader_file" style="margin: auto 0">Не выбран новый файл</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">Кол-во писем: <span style="width: content-box; font-weight: bold" id="emails_count"></span></div>
+                        <div class="col-sm-6"></div>
+                    </div>
+                        <div class="row">
+                            <div class="col-sm-6"><span>Файл используемый в текущей рассылке</span></div>
+                        <div class="col-sm-6" ><span id="now_file" ></span></div>
+                    </div>
+                </div>
+                <div class="col-sm-6" style="text-align: center; border: 1px solid black; border-radius: 5px; padding 50px">
+                    <p>Список последних 5 шаблонов</p>
+                <div class="row">
+                    {% for file in files %}
+                        <div class="col-9" style="text-align: left; padding-left: 50px">
+                        <input type="radio" value="{{ file.id }}" class="template" name="template">
+                        <b>{{ file.file.instance.filename }}</b>
+                        </div>
+                        <div class="col-3">
+                        <button type="button" style="border: none; background: none; color: red; text-decoration: underline" value="{{ file.id }}" onclick="delete_data(this.value)">Удалить</button>
+                        </div>
+                    {% endfor %}
+                </div>
+                </div>
+            </div>
+        <!-- MODAL DELETE HALL-->
+        <div class="modal fade bd-example-modal-lg" id="deleteModal100-choose_users" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModalLabel" style="display: none;" aria-hidden="true">
+                      <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                          <div class="modal-header bg-gray-light">
+                            <h5 class="modal-title" id="deleteModal1Label-choose_users">Подтвердите удаление новости</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+
+                              <div class="modal-body">
+                                        <div class="card-body" >
+                <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                    <div class="row"><div class="col-sm-12 col-md-6"></div>
+                        <div class="col-sm-12 col-md-6"></div>
+                    </div>
+                    <table id="users_mail" class="table table-bordered table-hover dataTable dtr-inline" aria-describedby="example2_info">
+                  <thead>
+                  <tr>
+                      <th class="sorting sorting_asc" tabindex="0" aria-controls="users" rowspan="1" colspan="1" aria-label="ID: activate to sort column descending" aria-sort="ascending">
+                          Выбрать
+                      </th>
+                      <th class="sorting sorting_asc" tabindex="0" aria-controls="users" rowspan="1" colspan="1" aria-label="ID: activate to sort column descending" aria-sort="ascending">
+                          ID
+                      </th>
+                      <th class="sorting" tabindex="0" aria-controls="users" rowspan="1" colspan="1" aria-label="Дата регистрации: activate to sort column ascending">
+                          Дата регистрации
+                      </th>
+                      <th class="sorting" tabindex="0" aria-controls="users" rowspan="1" colspan="1" aria-label="День рождения(s): activate to sort column ascending">
+                          День рождения(s)
+                      </th>
+                      <th class="sorting" tabindex="0" aria-controls="users" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">
+                          Email
+                      </th>
+                      <th class="sorting" tabindex="0" aria-controls="users" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">
+                          Телефон
+                      </th>
+                      <th class="sorting" tabindex="0" aria-controls="users" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">
+                          ФИО
+                      </th>
+                      <th class="sorting" tabindex="0" aria-controls="users" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">
+                          Псевдоним
+                      </th>
+                      <th class="sorting" tabindex="0" aria-controls="users" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">
+                          Город
+                      </th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                {% for u in users %}
+                    {% if not u.is_staff and not u.is_superuser %}
+                  <tr class="odd">
+                    <td>
+                        <a id="{{ u.email }}">
+                        <input type="checkbox" id="id_{{ u.email }}" name="{{ u.email }} " onclick="add_email(this.name)">
+                            </a>
+                    </td>
+
+                    <td>{{ u.id }}</td>
+                    <td>{{ u.date_joined }}+</td>
+                    <td> {{ u.birthday }} </td>
+                    <td> {{ u.email }}</td>
+                    <td> {{ u.phone }}</td>
+                    <td> {{ u.first_name }} {{ u.last_name }}</td>
+                    <td> {{ u.username }}</td>
+                    <td> {{ u.city }}</td>
+                  </tr>
+                    {% endif %}
+                  {% endfor %}
+                  </tbody>
+                </table>
+                        </div>
+                    </div>
+                </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                                <button type="button"  class="btn btn-primary" data-bs-dismiss="modal" onclick="choose()">Выбрать</button>
+                              </div>
+                          <div style="display: none"><input type="text" value="" name="all_type" id="id_all_type"></div>
+
+                        </div>
+                      </div>
+        </div>
+        <!-- ENDMODAL DELETE NEW-->
+            <div class="row" style="justify-content: center; padding-top: 40px">
+                <div class="col-2">
+                    <button type="button" onclick="send_mail()" id="send_email"  class="btn btn-primary">Начать рассылку</button>
+                </div>
+            </div>
+        </form>
+</div>
+
+    {% block script %}
+        <script>
+        let temp
+        function get_data() {
+            $.ajax({
+                url: '{% url 'cinema:mailing' %}',
+                type: 'get',
+                data: {
+                },
+                success: (data) => {
+                    console.log(data);
+                    files = data.files;
+                    $("#form > div:nth-child(3) > div:nth-child(2) > div").html('')
+                    let templates = "";
+                    $(files).each(function(index, value) {
+                        templates += "<div class='col-9' style='text-align: left; padding-left: 50px'> <input type='radio' value="+value.file_id+" class='template' name='template'> <b>"+value.file_name+"</b> </div><div class='col-3'><button style='border: none; background: none; color: red; text-decoration: underline' type='button' value="+value.file_id+" onclick='delete_data(this.value)'>Удалить</button></div>";
+                    });
+                        $("#form > div:nth-child(3) > div:nth-child(2) > div").append(templates);
+
+                error: (error) => {
+                    console.log("Errors= "+error);
+                }
+                $('.template').on('click', function () {
+                    temp = $(this).val()
+                    $('#now_file').text($(this).next().text());
+                    console.log($(this).next().text())
+                })
+            }})}
+
+
+        function delete_data(value) {
+            $.ajax({
+                url: '{% url 'cinema:delete_template' %}',
+                type: 'get',
+                data: {
+                    'delete_template': value,
+                },
+                success: (data) => {
+                    console.log('fasdjf')
+                    get_data()
+            }
+            })
+        }
+
+         function add_template() {
+            var foket = $("input[name=csrfmiddlewaretoken]").val();
+            var formData = new FormData();
+            var file = $('#id_file');
+            console.log(file);
+            console.log(file[0].files[0])
+            formData.append('file', file[0].files[0]);
+            formData.append('csrfmiddlewaretoken', foket);
+            s = formData.get('file')
+             console.log(s)
+            $.ajax({
+                method: "post",
+                url: '{% url 'cinema:mailing' %}',
+                processData: false,
+                contentType: false,
+                mimeType: "multipart/form-data",
+                data: formData,
+                success: (data) => {
+                    get_data()
+                }
+        })}
+
+            function send_mail() {
+            var emails = document.getElementById('id_all_type').getAttribute('value')
+            var template = temp
+            var foket = $("input[name=csrfmiddlewaretoken]").val();
+            var user_select_all = $('#user_select_all').is(':checked');
+
+                console.log(template)
+                $.ajax({
+                url: '{% url 'cinema:send_mail' %}',
+                type: 'POST',
+                data: {
+                    'emails': emails,
+                    'csrfmiddlewaretoken': foket,
+                    'template': template,
+                    'user_select_all': user_select_all,
+                },
+                success: (data) => {
+                    console.log(data);
+
+                error: (error) => {
+                    console.log("Errors= "+error);
+                }
+            }})}
+        </script>
+        <script src="{% static 'js/mailing.js' %}"></script>
+        <script type="text/javascript">
+        $(function () {
+        $('.template').on('click', function () {
+    console.log('faf')
+            temp = $(this).val()
+                    console.log(temp)
+    $('#now_file').text($(this).next().text());
+    console.log($(this).next().text())
+
+})})
+        </script>
+        {% endblock %}
+{% endblock %}

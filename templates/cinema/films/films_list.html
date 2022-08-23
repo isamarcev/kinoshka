@@ -1,0 +1,59 @@
+{% extends 'cinema/layout/base.html' %}
+{% block title %}Films{% endblock %}
+{% load static %}
+{% block content %}
+<div style="text-align: right; padding-top: 10px; margin-right: 35px">
+
+                    <a href="{% url 'cinema:films_create' %}" style="color: white">
+                        <button type="button" class="btn btn-block btn-success" style="width: 200px; display: inline-block">Добавить фильм +
+                        </button>
+                </a>
+</div>
+    <div style="padding-top: 20px">
+        <h2 style="text-align: center">
+        Список фильмов текущих
+        </h2>
+        <div class="row" style="margin: 0 auto; min-height: 300px; max-width: 1100px">
+            {% for film in films %}
+                {% if film.date_of_premier %}
+                <div class="col" style="display: inline-block; min-width: 200px;width: 200px; max-width: 220px;  overflow: hidden; vertical-align: top; margin-right: 20px">
+                        <a href="{% url 'cinema:film_update' film.id %}">
+                            {% if film.logo %}
+                                <img src="{{ film.logo.url }}" alt="SJDFJSDJF" width="200px" height="275px">
+                            {% else %}
+                                <img src="" alt="SJDFJSDJF" width="200px" height="275px">
+                                {% endif %}
+                                <h4 style="text-align: center; color: black">{{ film.title_ru }} </h4>
+                        </a>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <h2 style="text-align: center">
+        Список фильмов которые покажут скоро
+        </h2>
+        <div class="row" style="margin: 0 auto; min-height: 300px; max-width: 1100px">
+            {% for film in films %}
+                {% if not film.date_of_premier %}
+                <div class="col" style="display: inline-block; min-width: 200px;width: 200px; max-width: 220px;  overflow: hidden; vertical-align: top; margin-right: 20px">
+                        <a href="{% url 'cinema:film_update' film.id %}">
+                                {% if film.logo %}
+                                <img src="{{ film.logo.url }}" alt="SJDFJSDJF" width="200px" height="275px">
+                            {% else %}
+                                <img src="" alt="SJDFJSDJF" width="200px" height="275px">
+                                {% endif %}
+                            <h4 style="text-align: center; color: black">{{ film.title_ru }} </h4>
+                        </a>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+{#        <div class="col" style="display: inline-block; width: 200px; max-width: 200px; min-width: 200px; max-height: 200px; margin: 30px">#}
+{#                    <a href="{% url 'cinema:add_cinema' %}">#}
+{#                        <img src="../../../static/cinema/dist/img/add.png" width="150px" height="150px" style="margin-right: auto; margin-left: auto; margin-top:auto; vertical-align: middle; display: block">#}
+{#                        <p style="text-align: center; position: absolute; bottom: 0; left: 10%; color: black; display: block">Добавить кинотеатр </p>#}
+{#                    </a>#}
+{#        </div>#}
+        </div>
+    </div>
+{% endblock %}

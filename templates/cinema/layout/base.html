@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}CMS{% endblock %}</title>
+{% block head %} {% endblock %}
+
+    <link type="text/css" rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+<link type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Google Font: Source Sans Pro -->
+  <link  type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link type="text/css" rel="stylesheet" href="/static/cinema/plugins/fontawesome-free/css/all.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="/static/cinema/dist/css/adminlte.min.css">
+  <!-- overlayScrollbars -->
+<script src="/static/cinema/plugins/jquery/jquery.min.js"></script>
+<script src="/static/cinema/plugins/jquery-ui/jquery-ui.min.js"></script>
+  <link rel="stylesheet" href="/static/cinema/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <link rel="stylesheet" href="/static/cinema/style/news_or_sale_status.css">
+
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+
+    <div class="wrapper">
+
+  <div class="preloader flex-column justify-content-center align-items-center">
+    <img class="animation__shake" src="/static/cinema/dist/img/CinemaCMSLogo.png" alt="AdminLTELogo" height="60" width="60">
+  </div>
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+      <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+    </ul>
+
+    <!-- Right navbar links -->
+    <ul class="navbar-nav ml-auto">
+        <!-- ADMIN -->
+      <li class="nav-item nav-link">
+        <a class="nav-link" href="#">
+            <img src="/static/cinema/dist/img/account.png" alt="Admin">
+          <span>Администратор</span>
+        </a>
+      </li>
+        <li class="nav-item nav-link">
+        <a href="#">
+            <img src="/static/cinema/dist/img/exit.png" alt="Exit">
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="{% url 'content:main' %}" class="brand-link">
+      <img src="/static/cinema/dist/img/CinemaCMSLogo.png" alt="Cinema Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <span class="brand-text font-weight-light">Cinema CMS</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+          <li class="nav-item">
+            <a href="{% url 'cinema:statistics' %}" class="nav-link">
+              <i class="nav-icon fas fa-chart-pie"></i>
+              <p>
+                Статистика
+              </p>
+            </a>
+          </li>
+
+
+          <li class="nav-item">
+            <a href="{% url 'cinema:banners' %}" class="nav-link">
+              <i class="nav-icon fas fa-images"></i>
+              <p>
+                Баннеры
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{% url 'cinema:films' %}" class="nav-link">
+              <i class="nav-icon fas fa-film"></i>
+              <p>
+                Фильмы
+              </p>
+            </a>
+          </li>
+
+
+
+          <li class="nav-item">
+            <a href="{% url 'cinema:cinemas' %}" class="nav-link">
+              <i class="nav-icon fas fa-landmark"></i>
+              <p>
+                Кинотеатры
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{% url 'cinema:news' %}" class="nav-link">
+              <i class="nav-icon fas fa-newspaper"></i>
+              <p>
+                Новости
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{% url 'cinema:sales' %}" class="nav-link">
+              <i class="nav-icon fas fa-walking"></i>
+              <p>
+                Акции
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{% url 'cinema:pages' %}" class="nav-link">
+              <i class="nav-icon fas fa-code"></i>
+              <p>
+                Страницы
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{% url 'cinema:users' %}" class="nav-link">
+              <i class="nav-icon fas fa-user"></i>
+              <p>
+                Пользователи
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'cinema:mailing' %}" class="nav-link">
+              <i class="nav-icon fas fa-envelope-open-text"></i>
+              <p>
+                Рассылки
+              </p>
+            </a>
+          </li>
+
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+
+    </div>
+    <!-- /.sidebar -->
+  </aside>
+          <div class="content-wrapper">
+        {% block content %}
+        {% endblock %}
+        </div>
+    </div>
+
+
+<!-- jQuery -->
+<!-- jQuery UI 1.11.4 -->
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+  $.widget.bridge('uibutton', $.ui.button)
+</script>
+<!-- Bootstrap 4 -->
+<script src="/static/cinema/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+{#    <script src="/static/cinema/dist/css/"></script>#}
+<!-- overlayScrollbars -->
+<script src="/static/cinema/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+<!-- AdminLTE App -->
+<script src="/static/cinema/dist/js/adminlte.js"></script>
+{#<!-- AdminLTE for demo purposes -->#}
+<script src="/static/cinema/dist/js/adminlte.min.js"></script>
+<script src="/static/cinema/plugins/sweetalert2/sweetalert2.min.js"></script>
+    <script src="/static/cinema/plugins/toastr/toastr.min.js"></script>
+    <script src="/static/cinema/script_creating/news_or_sale_status.js"></script>
+<script src="/static/cinema/dist/js/adminlte.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script>
+    $(document).ready( function () {
+    $('#users').DataTable(
+        {
+            "lengthChange": false
+        }
+    );
+} );
+    </script>
+{% block script %}
+{% endblock %}
+</body>
+</html>
