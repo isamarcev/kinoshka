@@ -378,13 +378,13 @@ def main_page(request):
     start = datetime.date.today()
     end = start + datetime.timedelta(days=1)
     session = Session.objects.filter(date__range=(start, end)).select_related('film',)
-
+    nodate = Film.objects.all()
     context = {
         'main_page': mainPage,
         'banners': banners,
         'sessions': session,
         'backgroundbanner': backgroundbanner,
-        'today': get_date(str(datetime.date.today()))
-
+        'today': get_date(str(datetime.date.today())),
+        'nodate': nodate,
     }
     return render(request, 'content/pages/main_page.html', context)

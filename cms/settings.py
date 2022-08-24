@@ -25,7 +25,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 
 DEBUG = bool(int(os.environ.get("DEBUG", default=0)))
 
-ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", default='172.18.0.1 localhost 127.0.0.1 [::1]').split(" ")
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", default='138.68.74.180 172.18.0.1 localhost 127.0.0.1 [::1]').split(" ")
 
 
 LOGIN_URL = '/users/accounts/login/'
@@ -68,7 +68,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'cms.urls'
 
-CSRF_TRUSTED_ORIGINS = ['http://localhost:1337']
+CSRF_TRUSTED_ORIGINS = ['http://138.68.74.180/']
 
 
 TEMPLATES = [

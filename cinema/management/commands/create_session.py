@@ -37,7 +37,7 @@ print(randomDate("7/2/2022 8:00 AM", "7/2/2022 11:00 PM", random.random()))
 
 
 def random_item(model, max_id=None):
-    x = model.objects.all().order_by('?').first()
+    x = model.objects.filter(date_of_premier=False).order_by('?').first()
     return x
 
 print(random_item(Film))

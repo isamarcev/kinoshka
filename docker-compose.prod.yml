@@ -32,6 +32,7 @@ services:
       - media_volume:/home/app/web/media
   redis:
     image: redis:alpine
+    restart: always
     ports:
       - '6379:6379'
   celery:

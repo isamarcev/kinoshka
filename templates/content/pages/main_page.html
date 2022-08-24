@@ -61,7 +61,7 @@
                         <img src="{{ film.film.logo.url }}" width="250px" height="300px" alt="">
                         <h4>{{ film.film.title }}</h4>
                             </a>
-                        <a href="#" class="btn btn-success">Купить билет</a>
+                        <a href="{% url 'content:buy-tickets' film.pk" class="btn btn-success">Купить билет</a>
                     </div>
                 {% endif %}
             {% endfor %}
@@ -72,11 +72,11 @@
         <!-- MOVIE SOON -->
         <h3 style="text-align: center; padding: 25px 0;"><b>Смотрите скоро</b></h3>
         <div class="row">
-            {% for film in sessions %}
-                {% if not film.film.date_of_premier %}
+            {% for film in nodate %}
+                {% if not film.date_of_premier %}
                     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-3" style="text-align: center">
-                        <img src="{{ film.film.logo.url }}" width="250" height="300" alt="">
-                        <h4>{{ film.film.title }}</h4>
+                        <img src="{{ film.logo.url }}" width="250" height="300" alt="">
+                        <h4>{{ film.title }}</h4>
 {#                        <a href="#" class="btn btn-success">Купить билет</a>#}
                     </div>
                 {% endif %}
