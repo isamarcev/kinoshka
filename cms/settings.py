@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
-DEBUG = bool(int(os.environ.get("DEBUG", default=1)))
+DEBUG = bool(int(os.environ.get("DEBUG", default=0)))
 
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", default='172.18.0.1 localhost 127.0.0.1 [::1]').split(" ")
 
@@ -147,7 +147,7 @@ TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
-# USE_TZ = False
+USE_TZ = True
 
 
 gettext = lambda s: s
